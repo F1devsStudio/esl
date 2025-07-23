@@ -33,6 +33,26 @@ function f1devsesl_register_required_plugins() {
 			'name'      => 'Kirki',
 			'slug'      => 'kirki'
 		),
+        array(
+            'name'      => 'WooCommerce',
+            'slug'      => 'woocommerce',
+        ),
+        array(
+            'name'      => 'Wishlist for WooCommerce',
+            'slug'      => 'wt-woocommerce-wishlist',
+        ),
+        array(
+            'name'      => 'Product Filter by WBW',
+            'slug'      => 'woo-product-filter',
+        ),
+        array(
+            'name'      => 'Smart WooCommerce Search',
+            'slug'      => 'smart-woocommerce-search',
+        ),
+        array(
+            'name'      => 'Contact Form 7',
+            'slug'      => 'contact-form-7',
+        ),
 	);
 
 	/*
