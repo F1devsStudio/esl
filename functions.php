@@ -31,6 +31,7 @@ if ( ! function_exists( 'f1devsesl_setup' ) ) :
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus( array(
 			'menu-1' => esc_html__( 'Primary', 'f1devs-esl' ),
+            'header_menu' => esc_html__( 'Header Menu', 'f1devs-esl' ),
 		) );
 
 		// Switch default core markup for search form, comment form, and comments
@@ -145,6 +146,9 @@ add_action( 'widgets_init', 'f1devsesl_widgets_init' );
  */
 function f1devsesl_scripts() {
     wp_enqueue_style( 'bootstrap-5', get_template_directory_uri() . '/assets/css/bootstrap.min.css', array(), 'v5.2.3', 'all' );
+    wp_enqueue_style('bootstrap-icons', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css', array(), '1.10.5', 'all');
+    wp_enqueue_style( 'f1devs-esl-style', get_template_directory_uri() . '/assets/css/style.css', array('bootstrap-5'), '1.0.0', 'all' );
+    wp_enqueue_style( 'f1devs-esl-style-icons', get_template_directory_uri() . '/assets/css/esl-icon.css', array('bootstrap-5'), '1.0.0', 'all' );
     wp_enqueue_script( 'jquery', get_template_directory_uri() . '/assets/js/jquery-3.6.0.min.js', array('jquery'), 'v3.6.0', true );
     wp_enqueue_script( 'viewportchecker', get_template_directory_uri() . '/assets/js/jquery.viewportchecker.min.js', array(), 'v1.0.0', true );
 
@@ -199,6 +203,6 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 }
 
 // Load WooCommerce compatibility file.
-if ( class_exists( 'WooCommerce' ) ) {
-	require get_template_directory() . '/inc/woocommerce.php';
-}
+//if ( class_exists( 'WooCommerce' ) ) {
+//	require get_template_directory() . '/inc/woocommerce.php';
+//}

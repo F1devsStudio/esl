@@ -1,0 +1,107 @@
+
+@font-face {
+  font-family: 'connected';
+  src:  url('../fonts/esl-icon/esl-connected.eot?pbiu5m');
+  src:  url('../fonts/esl-icon/esl-connected.eot?pbiu5m#iefix') format('embedded-opentype'),
+  url('../fonts/esl-icon/esl-connected.ttf?pbiu5m') format('truetype'),
+  url('../fonts/esl-icon/esl-connected.woff?pbiu5m') format('woff'),
+  url('../fonts/esl-icon/esl-connected.svg?pbiu5m#connected') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+i {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'connected' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+.esl-timer:before {
+  content: "\e904";
+}
+.esl-burger:before {
+  content: "\e901";
+}
+.esl-close:before {
+  content: "\e902";
+}
+.esl-search:before {
+  content: "\e903";
+}
+.esl-vacablury:before {
+  content: "\e900";
+}
+.esl-lock:before {
+  content: "\e909";
+}
+.esl-unlock:before {
+  content: "\e90b";
+}
+.esl-arrow-down:before {
+  content: "\e90c";
+}
+.esl-arrow-right:before {
+  content: "\e90d";
+}
+.esl-activities:before {
+  content: "\e90a";
+}
+.esl-bookmark-heart:before {
+  content: "\e90f";
+}
+.esl-folder:before {
+  content: "\e910";
+}
+.esl-todo-list:before {
+  content: "\e911";
+}
+.esl-youtube:before {
+  content: "\e912";
+}
+.esl-pdf:before {
+  content: "\e913";
+}
+.esl-level:before {
+  content: "\e914";
+}
+.esl-key:before {
+  content: "\e915";
+}
+.esl-heart:before {
+  content: "\e916";
+}
+.esl-person:before {
+  content: "\e917";
+}
+
+.esl-reg {
+  font-size: 0.62em;
+}
+
+.esl-reg-1 {
+  font-size: 1.45em;
+}
+
+.esl-reg-2 {
+  font-size: 2em;
+}
+
+.esl-reg-3 {
+  font-size: 3em;
+}
+
+.esl-reg-4 {
+  font-size: 4em;
+}

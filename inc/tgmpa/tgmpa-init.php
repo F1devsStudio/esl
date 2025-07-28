@@ -31,27 +31,32 @@ function f1devsesl_register_required_plugins() {
 	$plugins = array(
 		array(
 			'name'      => 'Kirki',
-			'slug'      => 'kirki'
+			'slug'      => 'kirki',
 		),
         array(
             'name'      => 'WooCommerce',
             'slug'      => 'woocommerce',
+            'required'  => true,
         ),
         array(
             'name'      => 'Wishlist for WooCommerce',
             'slug'      => 'wt-woocommerce-wishlist',
+            'required'  => true,
         ),
         array(
             'name'      => 'Product Filter by WBW',
             'slug'      => 'woo-product-filter',
+            'required'  => true,
         ),
         array(
             'name'      => 'Smart WooCommerce Search',
             'slug'      => 'smart-woocommerce-search',
+            'required'  => true,
         ),
         array(
             'name'      => 'Contact Form 7',
             'slug'      => 'contact-form-7',
+            'required'  => true,
         ),
 	);
 
