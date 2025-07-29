@@ -24,15 +24,17 @@
 
 <header class="navbar navbar-expand-xl py-3" id="navbar-header">
     <div class="container">
-        <a class="navbar-brand d-flex gap-2" href="<?php echo esc_url(home_url('/')); ?>">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo/logo-blue.svg" alt="Connected Logo" height="100" class="logo-img">
-        </a>
+
         <button class="navbar-toggler collapsed ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="icon-open"><i class="esl-burger esl-reg-1"></i></span>
             <span class="icon-close"><i class="esl-close esl-reg-1"></i></span>
         </button>
+
         <div class="collapse navbar-collapse navjust" id="navMenu">
-            <form class="d-flex ms-3 p-4">
+            <a class="navbar-brand d-flex gap-2" href="<?php echo esc_url(home_url('/')); ?>">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo/logo-yellow.png" alt="Connected Logo" height="100" class="logo-img">
+            </a>
+            <form class="d-flex ms-3 p-4 order-2 order-xl-1">
                 <div class="input-group search">
                     <span class="input-group-text ">
                         <i class="esl-search esl-reg-1"></i>
@@ -40,7 +42,7 @@
                     <input class="form-control" type="search" placeholder="Search">
                 </div>
             </form>
-            <nav class="d-flex gap-3 flex-xl-row flex-column mt-3 mt-lg-0">
+            <nav class="d-flex gap-3 flex-xl-row flex-column mt-3 mt-xl-0 order-3 order-xl-2">
                 <?php
                 wp_nav_menu([
                     'theme_location' => 'header_menu',
@@ -51,6 +53,11 @@
                 ]);
                 ?>
             </nav>
+            <div class="order-1 order-xl-3">
+                <a class="decor" href="#"><i class="esl-bookmark-heart esl-reg-2 icon ms-3"></i></a>
+                <a class="decor" href="#"><i class="esl-shopping-go esl-reg-2 icon ms-3"></i></a>
+                <a class="decor" href="#"><i class="esl-person esl-reg-2 icon ms-3"></i></a>
+            </div>
         </div>
     </div>
 </header>
