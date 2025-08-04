@@ -12,15 +12,13 @@
 ?>
 <footer class="footer-section text-center">
     <div class="container py-5 bg">
-        <h2 class="mb-3">LET'S STAY CONNECT<span>ED</span>!</h2>
+        <h2 class="mb-3"><?php echo get_theme_mod('footer_title_bold'); ?><span><?php echo get_theme_mod('footer_title'); ?></span><?php echo get_theme_mod('footer_title_sign'); ?>
+        </h2>
         <div class="d-flex justify-content-center">
-            <p class="mb-4 footer-text">
-                Contact us to share your feedback, ask questions and suggest topics for new workbooks!
-                We appreciate your ideas and engagement.
-            </p>
+            <p class="mb-4 footer-text"> <?php echo get_theme_mod('footer_text'); ?></p>
         </div>
             <?php if(is_home()):?>
-                <h5 class="text-start mb-3">We're CONNECT<span>ED</span>!</h5>
+                <h5 class="text-start mb-3"><?php echo get_theme_mod('footer_bold_subtitle'); ?><span>ED</span>!</h5>
                 <div class="contact-box mx-auto p-4">
                     <div class="ampersand">
                         <img src="<?= get_template_directory_uri() ?>/assets/img/logo/mini-logo-yellow.svg" alt="Connected Logo" height="100" class="logo-img">
@@ -35,6 +33,40 @@
 </footer>
 
 <?php wp_footer(); ?>
+
+<script>
+    let prevScrollPos = window.scrollY;
+
+    window.addEventListener("scroll", function () {
+        const currentScrollPos = window.scrollY;
+        const navbar = document.getElementById("navbar-header");
+
+        if (!navbar) return;
+
+        if (prevScrollPos > currentScrollPos) {
+            navbar.classList.remove("navbar--hidden");
+        } else {
+            navbar.classList.add("navbar--hidden");
+        }
+
+        prevScrollPos = currentScrollPos;
+    });
+</script>
+
+<script>
+    function updateCartCountCustom() {
+        fetch('<?php echo admin_url("admin-ajax.php?action=get_cart_count"); ?>')
+            .then(res => res.text())
+            .then(count => {
+                const cartCountEl = document.querySelector('.cart-count');
+                if (cartCountEl) {
+                    cartCountEl.textContent = count;
+                }
+            });
+    }
+
+    setInterval(updateCartCountCustom, 200);
+</script>
 
 </body>
 </html>

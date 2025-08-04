@@ -32,6 +32,7 @@ if ( ! function_exists( 'f1devsesl_setup' ) ) :
 		register_nav_menus( array(
 			'menu-1' => esc_html__( 'Primary', 'f1devs-esl' ),
             'header_menu' => esc_html__( 'Header Menu', 'f1devs-esl' ),
+            'header_icons'   => esc_html__( 'Header Icons Menu', 'f1devs-esl' ),
 		) );
 
 		// Switch default core markup for search form, comment form, and comments
@@ -206,3 +207,361 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 //if ( class_exists( 'WooCommerce' ) ) {
 //	require get_template_directory() . '/inc/woocommerce.php';
 //}
+
+//require get_template_directory() . '/inc/about-metabox.php';
+
+add_filter( 'rwmb_meta_boxes', 'register_about_first_metabox' );
+function register_about_first_metabox( $meta_boxes ) {
+    $meta_boxes[] = [
+        'title'      => 'Banner',
+        'id'         => 'about_banner_section',
+        'post_types' => ['page'],
+        'include'    => [
+            'template' => ['about.php'],
+        ],
+        'fields'     => [
+            [
+                'id'   => 'about_banner_image',
+                'name' => 'Image',
+                'type' => 'single_image',
+                'max_file_uploads' => 1,
+            ],
+            [
+                'id'   => 'about_banner_title',
+                'name' => 'Title',
+                'type' => 'textarea',
+            ],
+            [
+                'id'   => 'about_banner_text',
+                'name' => 'Text',
+                'type' => 'wysiwyg',
+                'raw'  => false,
+            ],
+        ],
+    ];
+    return $meta_boxes;
+}
+
+add_filter( 'rwmb_meta_boxes', 'register_about_story_metabox' );
+
+function register_about_story_metabox( $meta_boxes ) {
+    $meta_boxes[] = [
+        'title'      => 'Our Story',
+        'id'         => 'our_story_section',
+        'post_types' => ['page'],
+        'include'    => [
+            'template' => ['about.php'],
+        ],
+        'fields'     => [
+            [
+                'id'   => 'our_story_title',
+                'name' => 'Section title',
+                'type' => 'text',
+            ],
+            [
+                'id'   => 'our_story_text',
+                'name' => 'Description text',
+                'type' => 'wysiwyg',
+            ],
+            [
+                'type' => 'heading',
+                'name' => 'Card Info',
+            ],
+            [
+                'id'   => 'card_info_items',
+                'type' => 'group',
+                'clone' => true,
+                'sort_clone' => true,
+                'collapsible' => true,
+                'group_title' => ['field' => 'our_story_name', 'template' => 'Card {{our_story_name}}'],
+                'fields' => [
+                    [
+                        'id'   => 'our_story_image',
+                        'name' => 'Card image',
+                        'type' => 'single_image',
+                        'max_file_uploads' => 1,
+                    ],
+                    [
+                        'id'   => 'our_story_position',
+                        'name' => 'Card position title',
+                        'type' => 'text',
+                    ],
+                    [
+                        'id'   => 'our_story_name',
+                        'name' => 'Card Name',
+                        'type' => 'text',
+                    ],
+                    [
+                        'id'   => 'our_story_social_icon',
+                        'name' => 'Social icon',
+                        'type' => 'single_image',
+                        'max_file_uploads' => 1,
+                    ],
+                    [
+                        'id'   => 'our_story_social',
+                        'name' => 'Social URL',
+                        'type' => 'url',
+                    ],
+                ],
+            ],
+            [
+                'type' => 'heading',
+                'name' => 'Our Mission Section',
+            ],
+            [
+                'id'   => 'mission_title',
+                'name' => 'Mission title',
+                'type' => 'text',
+            ],
+            [
+                'id'   => 'mission_text',
+                'name' => 'Mission text',
+                'type' => 'wysiwyg',
+            ],
+
+            [
+                'type' => 'heading',
+                'name' => 'Experience Section',
+            ],
+            [
+                'id'   => 'experience_title',
+                'name' => 'Experience title',
+                'type' => 'text',
+            ],
+            [
+                'id'   => 'experience_text',
+                'name' => 'Experience text',
+                'type' => 'wysiwyg',
+            ],
+
+            [
+                'type' => 'heading',
+                'name' => 'What We Offer',
+            ],
+            [
+                'id'   => 'offer_title',
+                'name' => 'Offer title',
+                'type' => 'text',
+            ],
+            [
+                'id'     => 'offer_items',
+                'type'   => 'group',
+                'clone'  => true,
+                'sort_clone' => true,
+                'collapsible' => true,
+                'group_title' => ['field' => 'offer_number', 'template' => 'Offer {{offer_number}}'],
+                'fields' => [
+                    [
+                        'id'   => 'offer_number',
+                        'name' => 'Number',
+                        'type' => 'text',
+                    ],
+                    [
+                        'id'   => 'offer_title',
+                        'name' => 'Title',
+                        'type' => 'text',
+                    ],
+                    [
+                        'id'   => 'offer_text',
+                        'name' => 'Description',
+                        'type' => 'textarea',
+                    ],
+                    [
+                        'id'   => 'offer_align_right',
+                        'name' => 'Right position',
+                        'type' => 'checkbox',
+                    ],
+                ],
+            ],
+
+            [
+                'type' => 'heading',
+                'name' => 'Join us',
+            ],
+            [
+                'id'   => 'join_title',
+                'name' => 'Section title',
+                'type' => 'text',
+            ],
+            [
+                'id'   => 'join_text',
+                'name' => 'Description text',
+                'type' => 'wysiwyg',
+            ],
+            [
+                'id'   => 'join_button_text',
+                'name' => 'Button text',
+                'type' => 'text',
+            ],
+            [
+                'id'   => 'join_button_url',
+                'name' => 'Button Page',
+                'type' => 'post',
+                'post_type' => 'page',
+                'field_type' => 'select',
+                'placeholder' => 'Выберите страницу',
+            ],
+            [
+                'id'   => 'join_final_text',
+                'name' => 'Final message',
+                'type' => 'textarea',
+            ],
+        ],
+    ];
+
+    return $meta_boxes;
+}
+
+
+add_filter( 'rwmb_meta_boxes', 'f1dev_materials_fields' );
+
+function f1dev_materials_fields( $meta_boxes ) {
+    $meta_boxes[] = [
+        'title'      => 'Lesson Materials',
+        'id'         => 'lesson_materials',
+        'post_types' => ['product'],
+        'fields'     => [
+            [
+                'id'     => 'lesson_materials_group',
+                'type'   => 'group',
+                'clone'  => true,
+                'sort_clone' => true,
+                'collapsible' => true,
+                'group_title' => ['field' => 'title'],
+                'fields' => [
+                    [
+                        'name' => 'Title',
+                        'id'   => 'title',
+                        'type' => 'text',
+                    ],
+                    [
+                        'name' => 'Format',
+                        'id'   => 'format',
+                        'type' => 'text',
+                    ],
+                ],
+            ],
+        ],
+    ];
+
+    return $meta_boxes;
+}
+
+add_filter('rwmb_meta_boxes', 'custom_accordion_meta_boxes');
+
+function custom_accordion_meta_boxes($meta_boxes) {
+    $meta_boxes[] = [
+        'title'      => 'Section "Whats you get"',
+        'id'         => 'product_accordion_data',
+        'post_types' => ['product'],
+        'context'    => 'normal',
+        'priority'   => 'high',
+        'fields'     => [
+            [
+                'id'   => 'custom_section_title',
+                'type' => 'text',
+                'name' => 'Title',
+            ],
+
+            // Vocabulary
+            [
+                'type' => 'heading',
+                'name' => 'Vocabulary',
+            ],
+            [
+                'id'   => 'accordion_vocabulary_title',
+                'type' => 'text',
+                'name' => 'Title',
+            ],
+            [
+                'id'   => 'accordion_vocabulary_content',
+                'type' => 'wysiwyg',
+                'name' => 'Text',
+            ],
+
+            // Activities
+            [
+                'type' => 'heading',
+                'name' => 'Activities',
+            ],
+            [
+                'id'   => 'accordion_activities_title',
+                'type' => 'text',
+                'name' => 'Title',
+            ],
+            [
+                'id'   => 'accordion_activities_content',
+                'type' => 'wysiwyg',
+                'name' => 'Text',
+            ],
+
+            // Video Lessons
+            [
+                'type' => 'heading',
+                'name' => 'Video lessons',
+            ],
+            [
+                'id'   => 'accordion_video_title',
+                'type' => 'text',
+                'name' => 'Title',
+            ],
+            [
+                'id'   => 'accordion_video_content',
+                'type' => 'wysiwyg',
+                'name' => 'Text',
+            ],
+
+            // Lesson Plans
+            [
+                'type' => 'heading',
+                'name' => 'Lesson plans',
+            ],
+            [
+                'id'   => 'accordion_plans_title',
+                'type' => 'text',
+                'name' => 'Title',
+            ],
+            [
+                'id'   => 'accordion_plans_content',
+                'type' => 'wysiwyg',
+                'name' => 'Text',
+            ],
+
+            // Lesson Topics
+            [
+                'type' => 'heading',
+                'name' => 'Lesson topics',
+            ],
+            [
+                'id'   => 'accordion_topics_title',
+                'type' => 'text',
+                'name' => 'Title',
+            ],
+            [
+                'id'   => 'accordion_topics_content',
+                'type' => 'wysiwyg',
+                'name' => 'Text',
+            ],
+        ],
+    ];
+
+    return $meta_boxes;
+}
+
+add_filter( 'wpcf7_form_elements', function( $content ) {
+    return do_shortcode( $content );
+});
+
+add_filter('wpcf7_autop_or_not', '__return_false');
+
+add_action('wp_ajax_get_cart_count', 'get_cart_count');
+add_action('wp_ajax_nopriv_get_cart_count', 'get_cart_count');
+
+function get_cart_count() {
+    if ( function_exists( 'WC' ) && WC()->cart ) {
+        echo WC()->cart->get_cart_contents_count();
+    } else {
+        echo 0;
+    }
+    wp_die();
+}
