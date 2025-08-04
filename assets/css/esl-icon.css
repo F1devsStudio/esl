@@ -28,6 +28,45 @@ i {
 
 
 
+.esl-edit:before {
+  content: "\e919";
+}
+.esl-order:before {
+  content: "\e91b";
+}
+.esl-home:before {
+  content: "\e91d";
+}
+.esl-add:before {
+  content: "\e90e";
+}
+.esl-delete:before {
+  content: "\e916";
+}
+.esl-see-all:before {
+  content: "\e918";
+}
+.esl-view:before {
+  content: "\e91a";
+}
+.esl-profile:before {
+  content: "\e91c";
+}
+.esl-heart-fe .path1:before {
+  content: "\e906";
+  color: #ffffff;
+}
+.esl-heart-fe .path2:before {
+  content: "\e907";
+  margin-left: -1em;
+  color: #000000;
+}
+.esl-shopping-go:before {
+  content: "\e908";
+}
+.esl-mini-logo:before {
+  content: "\e905";
+}
 .esl-timer:before {
   content: "\e904";
 }
@@ -78,9 +117,6 @@ i {
 }
 .esl-key:before {
   content: "\e915";
-}
-.esl-heart:before {
-  content: "\e916";
 }
 .esl-person:before {
   content: "\e917";
