@@ -19,13 +19,17 @@
                 We appreciate your ideas and engagement.
             </p>
         </div>
-        <h5 class="text-start mb-3">We're CONNECT<span>ED</span>!</h5>
-        <div class="contact-box mx-auto p-4">
-            <div class="ampersand">
-                <img src="<?= get_template_directory_uri() ?>/assets/img/logo/mini-logo-yellow.svg" alt="Connected Logo" height="100" class="logo-img">
-            </div>
-                <?= do_shortcode('[contact-form-7 id="1d7cbb2" title="leave us a message"]')?>
-        </div>
+            <?php if(is_home()):?>
+                <h5 class="text-start mb-3">We're CONNECT<span>ED</span>!</h5>
+                <div class="contact-box mx-auto p-4">
+                    <div class="ampersand">
+                        <img src="<?= get_template_directory_uri() ?>/assets/img/logo/mini-logo-yellow.svg" alt="Connected Logo" height="100" class="logo-img">
+                    </div>
+                    <?= do_shortcode('[contact-form-7 id="1d7cbb2" title="leave us a message"]')?>
+                </div>
+            <?php else:?>
+                <a href="" class="btn btn-explore">Connected</a>
+            <?php endif;?>
         <p class="mt-5 small mb-0">&copy; 2025 by CONNECTED.</p>
     </div>
 </footer>
