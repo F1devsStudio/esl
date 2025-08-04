@@ -34,12 +34,13 @@
             <a class="navbar-brand d-flex gap-2" href="<?php echo esc_url(home_url('/')); ?>">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo/logo-yellow.png" alt="Connected Logo" height="100" class="logo-img">
             </a>
-            <form class="d-flex ms-3 p-4 order-2 order-xl-1">
+            <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" id="smart-search-input" class="d-flex ms-3 p-4 order-2 order-xl-1">
                 <div class="input-group search">
-                    <span class="input-group-text ">
+                    <span class="input-group-text">
                         <i class="esl-search esl-reg-1"></i>
                     </span>
-                    <input class="form-control" type="search" placeholder="Search">
+                    <input class="form-control" type="search" name="s" placeholder="Search" autocomplete="off">
+                    <input type="hidden" name="post_type" value="product">
                 </div>
             </form>
             <nav class="d-flex gap-3 flex-xl-row flex-column mt-3 mt-xl-0 order-3 order-xl-2">
@@ -54,9 +55,24 @@
                 ?>
             </nav>
             <div class="order-1 order-xl-3">
-                <a class="decor" href="#"><i class="esl-bookmark-heart esl-reg-2 icon ms-3"></i></a>
-                <a class="decor" href="#"><i class="esl-shopping-go esl-reg-2 icon ms-3"></i></a>
-                <a class="decor" href="#"><i class="esl-person esl-reg-2 icon ms-3"></i></a>
+                <a class="decor" href="<?php echo esc_url( home_url('/wt-webtoffee-wishlist') ); ?>">
+                    <i class="esl-bookmark-heart esl-reg-2 icon ms-3"></i>
+                </a>
+                <?php
+                $cart_url      = wc_get_cart_url();
+                $cart_count    = WC()->cart->get_cart_contents_count();
+
+                echo '<a class="decor position-relative" href="' . esc_url( $cart_url ) . '"><i class="esl-shopping-go esl-reg-2 icon ms-3"></i>';
+
+                if ( $cart_count > 0 ) {
+                    echo '<span class="cart-count">' . esc_html( $cart_count ) . '</span>';
+                }
+
+                echo '</a>';
+                ?>
+                <a class="decor" href="<?php echo esc_url( get_permalink( get_option('woocommerce_myaccount_page_id') ) ); ?>">
+                    <i class="esl-person esl-reg-2 icon ms-3"></i>
+                </a>
             </div>
         </div>
     </div>

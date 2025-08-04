@@ -5,7 +5,7 @@
 
 get_header();
 ?>
-<section class="hero-section pt-5">
+<section class="hero-section">
     <div class="container hero-div">
         <div class="hero-image">
             <img src="<?php echo get_template_directory_uri(); ?>/assets/img/girl-student.avif" alt="Student" class="img-fluid">
@@ -76,21 +76,6 @@ get_header();
         </div>
     </div>
 </section>
-<script>
-    let prevScrollpos = window.pageYOffset;
-    window.onscroll = function () {
-        const currentScrollPos = window.pageYOffset;
-        const navbar = document.getElementById("navbar-header");
-
-        if (prevScrollpos > currentScrollPos) {
-            navbar.classList.remove("navbar--hidden");
-        } else {
-            navbar.classList.add("navbar--hidden");
-        }
-
-        prevScrollpos = currentScrollPos;
-    }
-</script>
 <?php
 get_footer();
 ?>

@@ -6,15 +6,15 @@
 
 get_header(); ?>
 
-    <section class="contact-section py-5">
+    <section class="contact-section pb-5">
         <div class="container">
-            <h2 class="mb-3"><?php the_title(); ?></h2>
-            <div class="d-flex justify-content-around">
-                <p><span>Email:</span> contact@connected.com</p>
-                <p><span>Телефон:</span> +1 (123) 456-7890</p>
-                <p><span>Адрес:</span> USA, California</p>
+            <h1 class="mb-3"><?php the_title(); ?></h1>
+            <div class="contact-info">
+                <p><span>Email:</span> <?php echo get_theme_mod('contact_email'); ?></p>
+                <p><span>Phone:</span> <?php echo get_theme_mod('contact_phone'); ?></p>
+                <p><span>Adress:</span> <?php echo get_theme_mod('contact_address'); ?></p>
             </div>
-            <h5 class="mt-5">Live Us a message!</h5>
+            <h5 class="mt-5"><?php echo get_theme_mod('contact_message'); ?></h5>
             <div class="contact-box mx-auto p-5">
                 <?php
                 echo do_shortcode('[contact-form-7 id="1d7cbb2" title="leave us a message"]');

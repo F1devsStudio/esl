@@ -206,3 +206,22 @@ do_action( 'woocommerce_before_cart' ); ?>
 </div>
 
 <?php do_action( 'woocommerce_after_cart' ); ?>
+
+<script>
+
+    function updateCartCountFromBlocks() {
+        fetch('/wp-json/wc/store/cart')
+            .then(res => res.json())
+            .then(data => {
+                const count = data.items.reduce((sum, item) => sum + item.quantity, 0);
+                const cartCountEl = document.querySelector('.cart-count');
+                if (cartCountEl) {
+                    cartCountEl.textContent = count;
+                }
+                console.log(count);
+            });
+    }
+
+    setInterval(updateCartCountFromBlocks, 2000);
+
+</script>
