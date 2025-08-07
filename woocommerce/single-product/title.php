@@ -18,5 +18,11 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
+?>
 
-the_title( '<h1 class="product_title entry-title">', '</h1>' );
+<div class="d-flex">
+    <h1 class="mb-4">
+        <?php the_title(); ?>
+    </h1>
+</div>
+

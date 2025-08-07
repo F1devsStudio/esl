@@ -7,96 +7,35 @@
  * @package F1devsesl
  */
 
-get_header(); ?>
-
-<?php
-	$default_sidebar_position = get_theme_mod( 'default_sidebar_position', 'right' );
+get_header();
 ?>
 
-	<div class="container">
-		<div class="row">
 
-			<?php if ( $default_sidebar_position === 'no' ) : ?>
-				<div class="col-md-12 wp-bp-content-width">
-			<?php else : ?>
-				<div class="col-md-8 wp-bp-content-width">
-			<?php endif; ?>
+<section class=" error d-flex align-items-center pb-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 order-md-2">
+                <div class="d-flex justify-content-center">
+                    <img src="<?php echo get_template_directory_uri('')?>/assets/img/404.png" width="400px">
+                </div>
+            </div>
+            <div class="col-md-6 text-center text-md-start ">
+                <div class="oops mb-3">
+                    <h2>Oops! That page can&rsquo;t be found.<br></h2>
+                </div>
+                <div class="text-error mb-3">
+                    <h1 class="text-muted">Error 404</h1>
+                </div>
+                <div class="looking-text mb-5">
+                    <p> The page you're looking for doesn't exist or has been moved.</p>
+                </div>
+                <div class="mb-5">
+                    <a class="btn btn-go-home" href="<?php echo esc_url( home_url( '/' ) ); ?>" role="button">Back to homepage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-				<div id="primary" class="content-area wp-bp-404">
-					<main id="main" class="site-main">
-
-						<div class="card mt-3r">
-							<div class="card-body">
-								<section class="error-404 not-found">
-									<header class="page-header">
-										<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'f1devs-esl' ); ?></h1>
-									</header><!-- .page-header -->
-
-									<div class="page-content">
-										<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'f1devs-esl' ); ?></p>
-
-										<?php
-											get_search_form();
-
-											the_widget( 'WP_Widget_Recent_Posts', array(), array(
-												'before_title' => '<h5 class="widget-title mt-4">',
-												'after_title'  => '</h5>',
-											) );
-										?>
-
-										<div class="widget widget_categories">
-											<h5 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'f1devs-esl' ); ?></h5>
-											<ul>
-											<?php
-												wp_list_categories( array(
-													'orderby'    => 'count',
-													'order'      => 'DESC',
-													'show_count' => 1,
-													'title_li'   => '',
-													'number'     => 10,
-												) );
-											?>
-											</ul>
-										</div><!-- .widget -->
-
-										<?php
-
-											the_widget( 'WP_Widget_Archives', 'dropdown=1', array(
-												'before_title' => '<h5 class="widget-title">',
-												'after_title'  => '</h5>',
-											) );
-
-											the_widget( 'WP_Widget_Tag_Cloud', array(), array(
-												'before_title' => '<h5 class="widget-title">',
-												'after_title'  => '</h5>',
-											) );
-										?>
-
-									</div><!-- .page-content -->
-								</section><!-- .error-404 -->
-							</div>
-							<!-- /.card-body -->
-						</div>
-						<!-- /.card -->
-
-					</main><!-- #main -->
-				</div><!-- #primary -->
-			</div>
-			<!-- /.col-md-8 -->
-
-			<?php if ( $default_sidebar_position != 'no' ) : ?>
-				<?php if ( $default_sidebar_position === 'right' ) : ?>
-					<div class="col-md-4 wp-bp-sidebar-width">
-				<?php elseif ( $default_sidebar_position === 'left' ) : ?>
-					<div class="col-md-4 order-md-first wp-bp-sidebar-width">
-				<?php endif; ?>
-						<?php get_sidebar(); ?>
-					</div>
-					<!-- /.col-md-4 -->
-			<?php endif; ?>
-		</div>
-		<!-- /.row -->
-	</div>
-	<!-- /.container -->
 <?php
 get_footer();

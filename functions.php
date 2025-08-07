@@ -476,7 +476,7 @@ function custom_accordion_meta_boxes($meta_boxes) {
             [
                 'id'   => 'accordion_vocabulary_content',
                 'type' => 'wysiwyg',
-                'name' => 'Text',
+                'name' => 'Description',
             ],
 
             // Activities
@@ -492,7 +492,7 @@ function custom_accordion_meta_boxes($meta_boxes) {
             [
                 'id'   => 'accordion_activities_content',
                 'type' => 'wysiwyg',
-                'name' => 'Text',
+                'name' => 'Description',
             ],
 
             // Video Lessons
@@ -508,7 +508,12 @@ function custom_accordion_meta_boxes($meta_boxes) {
             [
                 'id'   => 'accordion_video_content',
                 'type' => 'wysiwyg',
-                'name' => 'Text',
+                'name' => 'Description',
+            ],
+            [
+                'id'   => 'accordion_video_link',
+                'type' => 'URL',
+                'name' => 'Video link',
             ],
 
             // Lesson Plans
@@ -524,7 +529,7 @@ function custom_accordion_meta_boxes($meta_boxes) {
             [
                 'id'   => 'accordion_plans_content',
                 'type' => 'wysiwyg',
-                'name' => 'Text',
+                'name' => 'Description',
             ],
 
             // Lesson Topics
@@ -540,19 +545,13 @@ function custom_accordion_meta_boxes($meta_boxes) {
             [
                 'id'   => 'accordion_topics_content',
                 'type' => 'wysiwyg',
-                'name' => 'Text',
+                'name' => 'Description',
             ],
         ],
     ];
 
     return $meta_boxes;
 }
-
-add_filter( 'wpcf7_form_elements', function( $content ) {
-    return do_shortcode( $content );
-});
-
-add_filter('wpcf7_autop_or_not', '__return_false');
 
 add_action('wp_ajax_get_cart_count', 'get_cart_count');
 add_action('wp_ajax_nopriv_get_cart_count', 'get_cart_count');
@@ -565,3 +564,178 @@ function get_cart_count() {
     }
     wp_die();
 }
+
+add_action('admin_post_nopriv_submit_product_feedback', 'handle_custom_product_feedback');
+add_action('admin_post_submit_product_feedback', 'handle_custom_product_feedback');
+
+function handle_custom_product_feedback() {
+    if (
+        !isset($_POST['submit_product_feedback_nonce']) ||
+        !wp_verify_nonce($_POST['submit_product_feedback_nonce'], 'submit_product_feedback_action')
+    ) {
+        wp_die('Security check failed');
+    }
+
+    if (
+        empty($_POST['first_name']) ||
+        empty($_POST['email']) ||
+        empty($_POST['product_id']) ||
+        empty($_POST['rating']) || intval($_POST['rating']) < 1
+    ) {
+        wp_safe_redirect(add_query_arg('review_submitted', 'false', wp_get_referer()));
+        exit;
+    }
+
+    $product_id  = intval($_POST['product_id']);
+    $first_name  = sanitize_text_field($_POST['first_name']);
+    $last_name   = sanitize_text_field($_POST['last_name']);
+    $email       = sanitize_email($_POST['email']);
+    $rating      = isset($_POST['rating']) ? intval($_POST['rating']) : 0;
+    $comment     = sanitize_textarea_field($_POST['comment']);
+    $full_name   = trim($first_name . ' ' . $last_name);
+    $agree       = isset($_POST['agree_publish']) ? 1 : 0;
+
+    $commentdata = array(
+        'comment_post_ID'      => $product_id,
+        'comment_author'       => $full_name,
+        'comment_author_email' => $email,
+        'comment_content'      => $comment,
+        'comment_type'         => 'review',
+        'comment_approved'     => 0,
+    );
+
+    $comment_id = wp_insert_comment($commentdata);
+
+    if ($comment_id) {
+        update_comment_meta($comment_id, 'agreed_to_publish', $agree);
+        if ($rating > 0) {
+            update_comment_meta($comment_id, 'rating', $rating);
+        }
+    }
+
+    wp_safe_redirect(add_query_arg('review_submitted', 'true', wp_get_referer()));
+    exit;
+}
+
+add_action('after_setup_theme', 'reorder_product_summery');
+function reorder_product_summery(){
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_title',      5  );
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating',    10 );
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price',     10 );
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt',   20 );
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta',      40 );
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_sharing',   50 );
+}
+
+
+add_action( 'woocommerce_single_product_summary', 'add_new_product_summary_elements', 30 );
+
+function add_new_product_summary_elements() {
+    add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_title', 1 );
+    //add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 2 );
+    add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 60 );
+    //add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 4 );
+    add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 80 );
+    //add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 6 );
+    //add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_sharing', 7 );
+}
+
+
+add_action( 'woocommerce_single_product_summary', function() {
+    do_action( 'product_attributes_after' );
+}, 35 );
+
+
+function custom_after_attributes_output() {
+    echo '<p class="custom-after-attributes">';
+    require get_template_directory() . '/woocommerce/single-product/atributs.php';
+    echo '</p>';
+}
+add_action( 'product_attributes_after', 'custom_after_attributes_output' );
+
+add_action('after_setup_theme', 'woocommerce_after_single_product_summary');
+function woocommerce_after_single_product_summary(){
+    //remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs',    10 );
+    remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display',     15 );
+    remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products',   20 );
+}
+
+add_filter( 'woocommerce_product_tabs', '__return_empty_array' );
+remove_action( 'woocommerce_review_form', 'woocommerce_review_form', 10 );
+remove_action( 'woocommerce_after_single_product_summary', 'comments_template', 50 );
+add_action( 'woocommerce_after_single_product_summary', 'custom_show_review_form', 15 );
+
+function custom_show_review_form() {
+    wc_get_template( '/single-product/review.php' );
+}
+
+add_action('wp_footer', function () {
+    if (is_product()) {
+        ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var hearts = document.querySelectorAll('.single_product_div');
+                if (hearts.length > 1) {
+                    hearts[0].classList.add('original-heart');
+                }
+            });
+        </script>
+        <style>
+            .original-heart {
+                display: none !important;
+            }
+        </style>
+        <?php
+    }
+});
+
+
+add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_title_custom', 5 );
+function woocommerce_template_single_title_custom() {
+    $wishlist = new WT_Wishlist_Singlepage();
+
+    echo '<div class="d-flex justify-content-between align-items-center mb-4">';
+    echo '<h1 class="mb-4">' . get_the_title() . '</h1>';
+    $wishlist->render_webtoffee_wishlist_button();
+    echo '</div>';
+}
+
+add_action('wp_footer', function () {
+    if (!is_product()) return;
+    ?>
+    <div id="wishlist-toast" class="wishlist-toast"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.body.addEventListener('click', function (e) {
+                const target = e.target.closest('.wt-wishlist-button');
+                if (target) {
+                    const toast = document.getElementById('wishlist-toast');
+                    if (!toast) return;
+
+                    if (target.dataset.action === 'add') {
+                        toast.textContent = 'The item successfully added';
+                    } else if (target.dataset.action === 'remove') {
+                        toast.textContent = 'The item successfully removed';
+                    } else {
+                        return;
+                    }
+
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 3000);
+                }
+            });
+        });
+    </script>
+    <?php
+});
+
+
+
+
+
+
+
