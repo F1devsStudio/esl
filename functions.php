@@ -33,6 +33,7 @@ if ( ! function_exists( 'f1devsesl_setup' ) ) :
 			'menu-1' => esc_html__( 'Primary', 'f1devs-esl' ),
             'header_menu' => esc_html__( 'Header Menu', 'f1devs-esl' ),
             'header_icons'   => esc_html__( 'Header Icons Menu', 'f1devs-esl' ),
+            'my_account_menu' => esc_html__('My Account', 'f1devs-esl'),
 		) );
 
 		// Switch default core markup for search form, comment form, and comments
@@ -204,10 +205,158 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 }
 
 // Load WooCommerce compatibility file.
-//if ( class_exists( 'WooCommerce' ) ) {
-//	require get_template_directory() . '/inc/woocommerce.php';
-//}
+if ( class_exists( 'WooCommerce' ) ) {
+	require get_template_directory() . '/inc/woocommerce.php';
+}
 
+/**
+ * WooCommerce
+ */
+
+// Remove each style one by one
+add_filter( 'woocommerce_enqueue_styles', 'jk_dequeue_styles' );
+function jk_dequeue_styles( $enqueue_styles ) {
+    unset( $enqueue_styles['woocommerce-general'] );	// Remove the gloss
+    unset( $enqueue_styles['woocommerce-layout'] );		// Remove the layout
+    //unset( $enqueue_styles['woocommerce-smallscreen'] );	// Remove the smallscreen optimisation
+    return $enqueue_styles;
+}
+
+/**
+ * Enqueue your own stylesheet
+ */
+function wp_enqueue_woocommerce_style(){
+    wp_register_style( 'general-woocommerce', get_template_directory_uri() . '/assets/css/woocommerce.css' );
+    wp_register_style( 'layout-woocommerce', get_template_directory_uri() . '/assets/css/woocommerce-layout.css' );
+
+
+    if ( class_exists( 'woocommerce' ) ) {
+        wp_enqueue_style( 'general-woocommerce');
+        wp_enqueue_style( 'layout-woocommerce' );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'wp_enqueue_woocommerce_style');
+
+
+//
+//-------Delete downloads li from my-account menu
+function custom_my_account_menu_items( $items ) {
+    unset($items['downloads']);
+    unset($items['edit-address']);
+    unset($items['customer-logout']);
+
+    $new_items = array();
+
+    $new_items['dashboard'] = __('Main', 'woocommerce');
+    $new_items['edit-account'] = __('Profile', 'woocommerce');
+    $new_items['webtoffee-wishlist'] = __('Wish list', 'woocommerce');
+    $new_items['orders'] = __('Orders', 'woocommerce');
+
+    return $new_items;
+}
+add_filter( 'woocommerce_account_menu_items', 'custom_my_account_menu_items' );
+
+//-------Limit to one item per basket
+
+//add_filter( 'woocommerce_add_cart_item_data', 'single_item_add_to_cart' );
+
+
+// icons for my-account menu
+function custom_wc_account_menu_icons() {
+    return array(
+        'dashboard'          => 'esl-home esl-reg-1',
+        'orders'             => 'esl-order esl-reg-1',
+        'edit-account'       => 'esl-profile esl-reg-1',
+        'webtoffee-wishlist' => 'esl-bookmark-heart esl-reg-1'
+    );
+}
+
+function my_account_custom_fields_validation( $errors, $user ) {
+    if (!empty($_FILES['avatar_upload']['name']) && $_FILES['avatar_upload']['error'] == UPLOAD_ERR_OK){
+        $file = $_FILES['avatar_upload'];
+        $max_size = 2 * 1024 * 1024;
+        if ($file['size'] > $max_size) {
+            $errors->add('avatar_upload_size', __('Avatar is too large (max 2 MB).', 'esl'));
+        }
+    }
+    if (!empty( $_POST['account_birthday'])){
+        $birthday = sanitize_text_field( $_POST['account_birthday'] );
+        $d = DateTime::createFromFormat( 'Y-m-d', $birthday );
+        if (!$d || $d->format('Y-m-d') !== $birthday || strtotime($birthday) > time()){
+            $errors->add( 'account_birthday', __( 'Please enter a valid birthday.', 'esl' ) );
+        }
+    }
+    if (!empty( $_POST['account_gender'] ) ) {
+        $gender = sanitize_text_field( $_POST['account_gender'] );
+        $genders_access = array( 'male', 'female', 'other' );
+        if ( ! in_array( $gender, $genders_access, true ) ) {
+            $errors->add( 'account_gender', __( 'Please select a valid gender.', 'esl' ) );
+        }
+    }
+    if (!empty( $_POST['account_tel'])){
+        $tel = sanitize_text_field( $_POST['account_tel'] );
+        if ( strlen($tel) < 6 ) {
+            $errors->add( 'account_tel', __( 'Please enter a valid phone number.', 'esl' ) );
+        }
+    }
+}
+add_action( 'woocommerce_save_account_details_errors', 'my_account_custom_fields_validation', 10, 2 );
+
+
+
+function my_custom_save_account_fields( $user_id ){
+    if (wc_notice_count( 'error' ) > 0){
+        return;
+    }
+    $user_id = get_current_user_id();
+    $upload_dir = wp_get_upload_dir();
+    $target_dir = $upload_dir['basedir'] . '/avatars/';
+    if (!file_exists($target_dir)) {
+        wp_mkdir_p($target_dir);
+    }
+
+    if (isset($_POST['avatar_remove']) && $_POST['avatar_remove'] == '1') {
+        $old_data = get_user_meta($user_id, 'simple_local_avatar', true);
+        if (!empty($old_data['file_path']) && file_exists($old_data['file_path'])) {
+            @unlink($old_data['file_path']);
+        }
+        delete_user_meta($user_id, 'simple_local_avatar');
+    } elseif (!empty($_FILES['avatar_upload']['name']) && $_FILES['avatar_upload']['error'] == UPLOAD_ERR_OK) {
+        $old_data = get_user_meta($user_id, 'simple_local_avatar', true);
+        if (!empty($old_data['file_path']) && file_exists($old_data['file_path'])) {
+            @unlink($old_data['file_path']);
+        }
+
+        $ext = strtolower(pathinfo($_FILES['avatar_upload']['name'], PATHINFO_EXTENSION));
+        $filename = time() . '-' . wp_generate_password(8, false) . '.' . $ext;
+        $target_file = $target_dir . $filename;
+
+        if (move_uploaded_file($_FILES['avatar_upload']['tmp_name'], $target_file)) {
+            $avatar_url = $upload_dir['baseurl'] . '/avatars/' . $filename;
+            update_user_meta(
+                $user_id,
+                'simple_local_avatar',
+                [
+                    'full'      => $avatar_url,
+                    'file_path' => $target_file,
+                ]
+            );
+        }
+    }
+    if (isset( $_POST['account_birthday'])){
+        $birthday = sanitize_text_field( $_POST['account_birthday'] );
+        update_user_meta( $user_id, 'birthday', $birthday );
+    }
+    if (isset( $_POST['account_gender'])){
+        $gender = sanitize_text_field( $_POST['account_gender'] );
+        update_user_meta( $user_id, 'gender', $gender );
+    }
+    if (isset( $_POST['account_tel'])){
+        $tel = sanitize_text_field( $_POST['account_tel'] );
+        update_user_meta( $user_id, 'billing_phone', $tel );
+    }
+}
+add_action( 'woocommerce_save_account_details', 'my_custom_save_account_fields', 20 );
 //require get_template_directory() . '/inc/about-metabox.php';
 
 add_filter( 'rwmb_meta_boxes', 'register_about_first_metabox' );
