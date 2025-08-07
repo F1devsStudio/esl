@@ -18,16 +18,17 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
+$icons = custom_wc_account_menu_icons();
 do_action( 'woocommerce_before_account_navigation' );
 ?>
 
-<nav class="woocommerce-MyAccount-navigation" aria-label="<?php esc_html_e( 'Account pages', 'woocommerce' ); ?>">
-	<ul>
+<nav class="container" id="woo-nav" aria-label="<?php esc_html_e( 'Account pages', 'woocommerce' ); ?>">
+	<ul class="d-flex flex-md-row flex-column justify-content-center align-items-center">
 		<?php foreach ( wc_get_account_menu_items() as $endpoint => $label ) : ?>
-			<li class="<?php echo wc_get_account_menu_item_classes( $endpoint ); ?>">
-				<a href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>" <?php echo wc_is_current_account_menu_item( $endpoint ) ? 'aria-current="page"' : ''; ?>>
-					<?php echo esc_html( $label ); ?>
+			<li class="px-5 <?php echo wc_get_account_menu_item_classes( $endpoint ); ?>">
+				<a class="d-flex align-items-center" href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>" <?php echo wc_is_current_account_menu_item( $endpoint ) ? 'aria-current="page"' : ''; ?>>
+                    <i class="<?php echo esc_attr( $icons[$endpoint] ); ?>" aria-hidden="true"></i>
+                    <div><?php echo esc_html( $label ); ?></div>
 				</a>
 			</li>
 		<?php endforeach; ?>
