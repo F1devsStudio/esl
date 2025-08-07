@@ -13,7 +13,6 @@ header.navbar {
   top: 0;
   left: 0;
   width: 100%;
-  -webkit-transition: top 0.3s;
   transition: top 0.3s;
   z-index: 10;
 }
@@ -567,6 +566,13 @@ header .cart-count {
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
+.item-section .item-content h1 {
+  font-family: "Montserrat-Bold", sans-serif;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .item-section .item-content ul li p {
   margin-bottom: 8px;
   font-family: "Montserrat-Light", sans-serif;
@@ -789,6 +795,9 @@ header .cart-count {
 .feedback-bg form .esl-heart-fe:hover .path1:before {
   color: #FEC960;
 }
+.feedback-bg form .esl-heart-fe:active .path1:before {
+  color: #FEC960;
+}
 .feedback-bg form .heart-label input {
   display: none;
 }
@@ -811,6 +820,35 @@ header .cart-count {
 .feedback-bg form .btn-send:hover {
   color: #fff;
   background-color: #34568C;
+}
+
+.heart-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.heart-icon:hover {
+  background-color: #FEC960;
+  color: #FAF8E6;
+}
+.heart-icon:active {
+  background-color: #FEC960;
+  color: #FAF8E6;
+}
+.heart-icon::before {
+  content: "❤";
+  font-size: 24px;
+  color: #FAF8E6;
+}
+.heart-icon.active {
+  background-color: #FEC960;
+  color: #FAF8E6;
 }
 
 .footer-mini {
@@ -1004,6 +1042,51 @@ header .cart-count {
   font-size: 18px;
   padding: 60px 240px;
   margin: 0;
+}
+
+.error .oops h2 {
+  font-family: "Montserrat-Bold", sans-serif;
+  font-size: 34px;
+  color: #34568C;
+}
+.error .text-error h1 {
+  font-family: "Montserrat-Bold", sans-serif;
+  font-size: 56px;
+}
+.error .looking-text p {
+  font-family: "Montserrat-Regular", sans-serif;
+}
+.error .btn-go-home {
+  padding: 10px 20px;
+  width: 60%;
+  background-color: #34568C;
+  color: #FFF;
+  margin: 0 auto;
+  border-radius: 0;
+}
+.error .btn-go-home:hover {
+  background-color: #FEC960;
+  color: #000;
+}
+
+#wishlist-toast {
+  position: fixed;
+  bottom: 80%;
+  right: 50%;
+  background-color: #34568C;
+  color: #fff;
+  padding: 12px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  z-index: 9999;
+  font-size: 14px;
+}
+
+#wishlist-toast.show {
+  opacity: 1;
+  visibility: visible;
 }
 
 @media (max-width: 575px) {

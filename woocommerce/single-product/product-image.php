@@ -40,21 +40,45 @@ $wrapper_classes   = apply_filters(
 ?>
 <div class="<?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $wrapper_classes ) ) ); ?>" data-columns="<?php echo esc_attr( $columns ); ?>" style="opacity: 0; transition: opacity .25s ease-in-out;">
     <div class="woocommerce-product-gallery__wrapper">
-        <?php
-        if ( $post_thumbnail_id ) {
-            $html = wc_get_gallery_image_html( $post_thumbnail_id, true );
-        } else {
-            $wrapper_classname = $product->is_type( ProductType::VARIABLE ) && ! empty( $product->get_available_variations( 'image' ) ) ?
-                'woocommerce-product-gallery__image woocommerce-product-gallery__image--placeholder' :
-                'woocommerce-product-gallery__image--placeholder';
-            $html              = sprintf( '<div class="%s">', esc_attr( $wrapper_classname ) );
-            $html             .= sprintf( '<img src="%s" alt="%s" class="wp-post-image" />', esc_url( wc_placeholder_img_src( 'woocommerce_single' ) ), esc_html__( 'Awaiting product image', 'woocommerce' ) );
-            $html             .= '</div>';
-        }
+        <div id="carouselItems" class="carousel slide mb-3" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <?php
+                global $product;
+                $main_image_id = $product->get_image_id();
+                $main_image_url = wp_get_attachment_image_url( $main_image_id, 'full' );
 
-        echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', $html, $post_thumbnail_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
+                if ( $main_image_url ) {
+                    echo '<div class="carousel-item active">
+                        <img src="' . esc_url( $main_image_url ) . '" class="d-block w-100" alt="photo-main" id="main-image">
+                    </div>';
+                }
 
-        do_action( 'woocommerce_product_thumbnails' );
-        ?>
+                $attachment_ids = $product->get_gallery_image_ids();
+                if ( $attachment_ids ) {
+                    foreach ( $attachment_ids as $key => $attachment_id ) {
+                        $image_url = wp_get_attachment_image_url( $attachment_id, 'full' );
+                        echo '<div class="carousel-item">
+                            <img src="' . esc_url( $image_url ) . '" class="d-block w-100" alt="photo-' . ( $key + 1 ) . '">
+                        </div>';
+                    }
+                }
+                ?>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2 flex-wrap justify-content-between">
+            <?php
+            $all_images = array_merge( array( $main_image_id ), $attachment_ids );
+
+            if ( $all_images ) {
+                foreach ( $all_images as $key => $image_id ) {
+                    $image_url = wp_get_attachment_image_url( $image_id, 'thumbnail' );
+                    echo '<img src="' . esc_url( $image_url ) . '" class="img-thumbnail thumb" data-bs-target="#carouselItems" data-bs-slide-to="' . $key . '" alt="thumb-' . $key . '" data-image="' . esc_url( $image_url ) . '">';
+                }
+            }
+            ?>
+        </div>
     </div>
 </div>
+
+

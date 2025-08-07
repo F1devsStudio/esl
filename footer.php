@@ -64,7 +64,6 @@
                 }
             });
     }
-
     setInterval(updateCartCountCustom, 200);
 </script>
 

@@ -656,6 +656,14 @@ header {
       justify-content: space-between;
     }
 
+    h1 {
+      font-family: #{meta.inspect(fonts.$font-family-sans-serif-bold)};
+      font-size: variables.$second-title-text;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
     ul {
       li {
         p {
@@ -844,6 +852,10 @@ header {
       color: variables.$btn-color;
     }
 
+    .esl-heart-fe:active .path1:before {
+      color: variables.$btn-color;
+    }
+
     .heart-label input {
       display: none;
     }
@@ -857,7 +869,6 @@ header {
     .heart-label input:checked + .esl-heart-fe {
       color: variables.$btn-color;
     }
-
 
     .btn-send {
       background-color: variables.$btn-color;
@@ -875,6 +886,65 @@ header {
   }
 }
 
+//.heart-icon {
+//  display: inline-block;
+//  font-family: 'esl-connected';
+//  font-style: normal;
+//  font-weight: normal;
+//  font-variant: normal;
+//  text-transform: none;
+//  line-height: 1;
+//  cursor: pointer;
+//
+//  &::before {
+//    content: "\e907";
+//    color: #000;
+//    transition: color 0.2s ease;
+//    background-color: #fff;
+//    border-radius: 50px;
+//  }
+//
+//  &.active::before {
+//    color: #FEC960;
+//  }
+//
+//  &:hover::before {
+//    color: #FEC960;
+//  }
+//}
+
+.heart-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  &:hover {
+    background-color: #FEC960;
+    color: #FAF8E6;
+  }
+
+  &:active {
+    background-color: #FEC960;
+    color: #FAF8E6;
+  }
+
+  &::before {
+    content: '\2764';
+    font-size: 24px;
+    color: #FAF8E6;
+  }
+
+  &.active {
+    background-color: #FEC960;
+    color: #FAF8E6;
+  }
+}
 
 .footer-mini {
   background-color: variables.$btn-hover;
@@ -1081,6 +1151,64 @@ header {
     margin: 0;
   }
 }
+
+//------404--------
+.error {
+  .oops{
+    h2{
+      font-family: #{meta.inspect(fonts.$font-family-sans-serif-bold)};
+      font-size: variables.$title-text-mobile;
+      color: variables.$actual-color;
+    }
+  }
+  .text-error {
+    h1 {
+      font-family: #{meta.inspect(fonts.$font-family-sans-serif-bold)};
+      font-size: 56px;
+    }
+  }
+
+  .looking-text {
+    p {
+      font-family: #{meta.inspect(fonts.$font-family-sans-serif-regular)};
+    }
+  }
+
+  .btn-go-home {
+    padding: 10px 20px;
+    width: 60%;
+    background-color: variables.$actual-color;
+    color: variables.$text-color;
+    margin: 0 auto;
+    border-radius: 0;
+
+    &:hover {
+      background-color: variables.$accent-color;
+      color: variables.$text-color-black;
+    }
+  }
+}
+
+#wishlist-toast {
+  position: fixed;
+  bottom: 80%;
+  right: 50%;
+  background-color: variables.$actual-color;
+  color: #fff;
+  padding: 12px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  z-index: 9999;
+  font-size: 14px;
+}
+
+#wishlist-toast.show {
+  opacity: 1;
+  visibility: visible;
+}
+
 
 @media (max-width: 575px) {
   .hero-section .hero-div {
