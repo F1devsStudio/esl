@@ -714,3 +714,49 @@ function get_cart_count() {
     }
     wp_die();
 }
+
+//filter for showing columns in orders table
+
+add_filter('woocommerce_account_orders_columns', function($columns){
+
+    $my_columns = [];
+
+    $my_columns['order-picture'] = __( 'Product', 'f1dev-esl' );
+    $my_columns['order-name'] = __( 'Name', 'f1dev-esl' );
+    $my_columns['order-num-date'] = __('Order/Date', 'f1dev-esl');
+    $my_columns['order-total']   = $columns['order-total'];
+    $my_columns['order-status']  = $columns['order-status'];
+    $my_columns['order-actions'] = $columns['order-actions'];
+    return $my_columns;
+},20);
+
+//actions to add new columns to orders table
+
+add_action('woocommerce_my_account_my_orders_column_order-picture', function($order){
+    $items = $order->get_items();
+    $first_item = reset( $items );
+    $product = wc_get_product($first_item->get_product_id());
+    $image_id  = $product->get_image_id();
+    $image_url = wp_get_attachment_image_url( $image_id, 'full' );
+    echo '<img src="'. $image_url .'">';
+//    echo $product->get_image('thumbnail');
+});
+
+add_action('woocommerce_my_account_my_orders_column_order-name', function($order){
+    $items = $order->get_items();
+    $product_names = [];
+    foreach ($items as $item) {
+        $prod = wc_get_product($item->get_product_id());
+        if ($prod) {
+            $product_names[] = $prod->get_name();
+        }
+    }
+    $title_attr = implode(', ', $product_names);
+    $first_item = reset($items );
+    $product = wc_get_product($first_item->get_product_id());
+    echo '<span title="' . esc_attr($title_attr) . '">' . esc_html($product->get_name()) . '</span>';
+});
+
+add_action('woocommerce_my_account_my_orders_column_order-num-date', function($order){
+    printf('<div>№ %s</div><div>%s</div>', esc_html($order->get_order_number()), esc_html(wc_format_datetime($order->get_date_created(), 'd.m.Y')));
+});

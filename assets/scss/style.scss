@@ -157,6 +157,7 @@ header {
       .btn-explore {
         font-family: #{meta.inspect(fonts.$font-family-sans-serif-light)};
         font-size: variables.$btn-text;
+        font-size: variables.$btn-text;
         color: variables.$btn-color-text;
         background-color: variables.$btn-color;
         border-radius: 0 !important;
@@ -467,7 +468,19 @@ header {
   position: relative;
   background-color: variables.$btn-hover;
   color: variables.$text-color;
+  .btn-explore {
+    font-family: #{meta.inspect(fonts.$font-family-sans-serif-light)};
+    font-size: variables.$btn-text;
+    color: variables.$btn-color-text;
+    background-color: variables.$btn-color;
+    border-radius: 0 !important;
+    padding: 15px 70px !important;
 
+    &:hover {
+      color: variables.$btn-color-hover-text;
+      background-color: variables.$btn-hover;
+    }
+  }
   .bg {
     background-color: variables.$actual-color;
   }
