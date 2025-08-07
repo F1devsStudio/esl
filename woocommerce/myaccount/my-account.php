@@ -24,7 +24,19 @@ defined( 'ABSPATH' ) || exit;
  */
 do_action( 'woocommerce_account_navigation' ); ?>
 
-<div class="woocommerce-MyAccount-content">
+<div class="container<?php
+        if ( is_account_page() ) {
+            echo ' my-account-container';
+            if ( is_wc_endpoint_url( 'orders' ) ) {
+                echo ' my-orders-container';
+            } elseif ( is_wc_endpoint_url( 'view-order' ) ) {
+                echo ' my-view-order-container';
+            }
+            if (!is_wc_endpoint_url()) {
+                echo ' my-dashboard-container';
+            }
+        }
+    ?>" id="<?php echo is_account_page() ? 'my-account-container' : ''; ?>">
 	<?php
 		/**
 		 * My Account content.
