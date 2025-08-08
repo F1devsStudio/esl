@@ -118,6 +118,20 @@ header {
     border-radius: 50%;
     z-index: 10;
   }
+
+  .wishlist-count {
+    position: absolute;
+    top: -10px;
+    right: 0;
+    transform: translate(50%, -50%);
+    background-color: variables.$accent-color;
+    color: variables.$text-color-black;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 9px;
+    border-radius: 50%;
+    z-index: 10;
+  }
 }
 
 
@@ -1176,12 +1190,35 @@ header {
   }
 }
 
+//----------------workbook-----------------------------
+.workbook-section {
+    background-color: variables.$third-color;
+    height: 560px;
+  .main-text {
+    background-color: variables.$actual-color;
+    color: variables.$text-color;
+    padding: 90px;
+    width: 47%;
+
+    h1 {
+      font-family: #{meta.inspect(fonts.$font-family-sans-serif-bold)};
+      font-size: variables.$h1-text;
+
+      span {
+        display: block;
+      }
+    }
+  }
+}
+
 #wishlist-toast {
   position: fixed;
   bottom: 80%;
   right: 50%;
-  background-color: variables.$actual-color;
-  color: #fff;
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+  border-radius: 10px;
   padding: 12px 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   opacity: 0;
@@ -1342,6 +1379,17 @@ header {
 
     .sub-block {
       width: auto;
+    }
+  }
+
+  .workbook-section {
+
+    .main-text {
+      background-color: variables.$actual-color;
+      color: variables.$text-color;
+      padding: 90px;
+      width: auto;
+
     }
   }
 }
@@ -1600,9 +1648,9 @@ header {
       padding: 15px 25px;
     }
 
-    .cardpad {
-      padding: 10px;
-    }
+    //.cardpad {
+    //  padding: 10px;
+    //}
   }
 
   .connected-section {
@@ -1727,6 +1775,11 @@ header {
         font-size: 42px;
       }
     }
+  }
+
+  .workbook-section {
+    background-color: transparent;
+    height: auto;
   }
 }
 

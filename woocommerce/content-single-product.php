@@ -299,5 +299,63 @@ get_footer();
             });
         });
     });
-
 </script>
+
+<script>
+    jQuery(function($) {
+        function updateCartCount() {
+            fetch('<?php echo admin_url("admin-ajax.php?action=get_cart_count"); ?>')
+                .then(response => response.text())
+                .then(count => {
+                    const cartCountEl = document.querySelector('.cart-count');
+                    if (cartCountEl) {
+                        cartCountEl.textContent = count;
+                        if (count == 0) {
+                            cartCountEl.style.display = 'none';
+                        } else {
+                            cartCountEl.style.display = 'inline-block';
+                        }
+                    }
+                })
+                .catch(console.error);
+        }
+        updateCartCount();
+        $(document.body).on('added_to_cart removed_from_cart updated_wc_div updated_cart_totals', function() {
+            updateCartCount();
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const wishlistCountEl = document.querySelector('.wishlist-count');
+
+        function updateWishlistCount() {
+            fetch('<?php echo admin_url('admin-ajax.php'); ?>?action=get_wishlist_count')
+                .then(response => response.text())
+                .then(count => {
+                    if (!wishlistCountEl) return;
+
+                    count = parseInt(count);
+                    if (count > 0) {
+                        wishlistCountEl.textContent = count;
+                        wishlistCountEl.style.display = 'inline-block';
+                    } else {
+                        wishlistCountEl.textContent = '';
+                        wishlistCountEl.style.display = 'none';
+                    }
+                });
+        }
+
+        document.body.addEventListener('click', function (e) {
+            if (e.target.closest('.wt-wishlist-button')) {
+                setTimeout(updateWishlistCount, 1000);
+            }
+        });
+        updateWishlistCount();
+    });
+</script>
+
+
+
+
