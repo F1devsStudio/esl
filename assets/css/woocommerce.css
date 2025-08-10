@@ -3134,8 +3134,8 @@ body:not(.search-results) .twentysixteen .entry-summary {
         padding-bottom: 20px;
         margin-bottom: 30px;
         img{
-            height: 200px!important;
-            width: 200px!important;
+            height: 250px!important;
+            width: 250px!important;
         }
         input, select, .form-view-value{
             border: none;
@@ -3148,12 +3148,17 @@ body:not(.search-results) .twentysixteen .entry-summary {
             padding: 6px 0;
         }
     }
-    #my-account-container.my-orders-container, #my-account-container.my-dashboard-container{
-        background: #fff;
+    #my-account-container.my-orders-container{
         box-shadow: 0 2px 8px 0 rgba(40, 40, 40, 0.13);
         border-radius: 0;
         padding: 36px 28px;
         box-sizing: border-box;
+    }
+    #my-account-container.my-orders-container, #my-account-container.my-dashboard-container{
+        background: #fff;
+        h1{
+            font-family: "Montserrat-Bold";
+        }
         .woocommerce-orders-table {
             border: none;
             background: transparent;
@@ -3207,7 +3212,7 @@ body:not(.search-results) .twentysixteen .entry-summary {
             vertical-align: middle;
             text-align: center;
             border: none !important;
-            padding: 18px 16px;
+            padding: 5px 16px;
         }
 
     }
@@ -3246,7 +3251,7 @@ body:not(.search-results) .twentysixteen .entry-summary {
                 }
             }
         }
-        >h1{
+        >h2{
             font-family: "Montserrat-Bold";
             color: #ffffff;
         }
@@ -3274,17 +3279,106 @@ body:not(.search-results) .twentysixteen .entry-summary {
             margin-bottom: 0;
         }
     }
+    #my-account-container.my-wishlist-container{
+        box-shadow: 0 2px 8px 0 rgba(40, 40, 40, 0.13);
+        border-radius: 0;
+        padding: 36px 28px;
+        box-sizing: border-box;
+    }
+    #my-account-container.my-wishlist-container, #my-account-container.my-dashboard-container{
+        background: #fff;
+        h2{
+            font-family: "Montserrat-Bold";
+        }
+        img{
+            width: 60px !important;
+            height: 60px !important;
+            margin: 10px 0;
+        }
+        img.profile-image{
+            width: 250px!important;
+            height: 250px!important;
+        }
+        .wt_frontend_wishlist_table{
+            border: none !important;
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 14px;
+            background: transparent;
+            th,td{
+                text-align: center;
+            }
+            .wishlist-header{
+                box-shadow: 0 0 2px rgba(0,0,0,0.6);
+                border: 1px solid #ffffff;
+                border-radius: 5px;
+                th{
+                    padding: 10px 0;
+                }
+            }
+            .wishlist-product{
+                box-shadow: 0 2px 8px #0001;
+                border: 2px solid #FFFFFF;
+                border-radius: 5px;
+                a{
+                    text-decoration: none;
+                    color: #000000;
+                    font-family: "Montserrat-Bold";
+                }
+                .wishlist-actions{
+                    text-align: right;
+                    button{
+                        margin-right: 10px;
+                        border-radius: 0;
+                        background: #34568C;
+                        color: #ffffff;
+                    }
+                }
+            }
+        }
+    }
+
     #my-account-container .woocommerce-orders-table__cell-order-picture img {
-        width: 100px !important;
-        height: 100px !important;
+        width: 80px !important;
+        height: 80px !important;
         object-fit: cover;
     }
     .woocommerce-orders-table__cell:before {
         content: none !important;
     }
     #my-account-container.my-dashboard-container{
-        #account-form{
-            flex-direction: column !important;
+        .redirect-link{
+            text-decoration: none;
+            color: #000000;
+        }
+        .profile-container{
+            background: #34568C;
+            color: #ffffff;
+            .custom-bold{
+                font-family: "Montserrat-Bold";
+            }
+            .special-info{
+                div{
+                    margin-bottom: 20px;
+                    border-bottom: 1px solid #FEC960;
+                    .custom-bold{
+                        margin-left: 40px;
+                    }
+                }
+            }
+            .btn-edit{
+                border-radius: 0;
+                padding: 10px 60px;
+                margin-bottom: 20px;
+            }
+        }
+        .dash-orders{
+        }
+        .dash-orders, .dash-wishlist{
+            box-shadow: 0 2px 8px 0 rgba(40, 40, 40, 0.13);
+            border-radius: 0;
+            padding: 15px 28px;
+            box-sizing: border-box;
         }
     }
 }

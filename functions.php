@@ -64,8 +64,29 @@ if ( ! function_exists( 'f1devsesl_setup' ) ) :
 endif;
 add_action( 'after_setup_theme', 'f1devsesl_setup' );
 
+function custom_endpoint_content() {
 
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'wt_wishlists';
+    $user = get_current_user_id();
+    if(is_user_logged_in()){
+        $products = $wpdb->get_results("SELECT * FROM `$table_name` where `user_id` = '$user'", ARRAY_A);
+    }else{
+        $table_name = $wpdb->prefix . 'wt_guest_wishlists';
+        $session_id = WC()->session->get('sessionid');
+        $products = $wpdb->get_results("SELECT * FROM `$table_name` where `session_id` = '$session_id'", ARRAY_A);
+    }
+    $custom_page = get_template_directory() . '/woocommerce/myaccount/wishlist-account-view-frontend.php';
+    if ( file_exists($custom_page) ) {
+        require_once($custom_page);
+    }
+}
 
+add_action('init', function (){
+    add_rewrite_endpoint( 'webtoffee-wishlist', EP_ROOT | EP_PAGES );
+    remove_action('woocommerce_account_webtoffee-wishlist_endpoint' , 'Wishlist_Account_View::endpoint_content');
+    add_action('woocommerce_account_webtoffee-wishlist_endpoint', 'custom_endpoint_content');
+});
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.

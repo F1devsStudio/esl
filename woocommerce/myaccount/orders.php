@@ -22,7 +22,14 @@ defined( 'ABSPATH' ) || exit;
 do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 <?php if ( $has_orders ) : ?>
-    <h1><?php esc_html_e( 'Orders', 'woocommerce' ); ?></h1>
+    <?php if (is_wc_endpoint_url('orders')): ?>
+        <h2><?php esc_html_e( 'Orders', 'woocommerce' ); ?></h2>
+    <?php else: ?>
+        <div class="d-flex flex-between align-items-center justify-content-between">
+            <h2><?php esc_html_e( 'Orders', 'woocommerce' ); ?></h2>
+            <a class="redirect-link" href="<?php echo esc_url( wc_get_account_endpoint_url('orders') );?>">See all <i class="esl-arrow-right esl-reg"></i></a>
+        </div>
+    <?php endif;?>
 	<table class="woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table">
 <!--		<thead>-->
 <!--			<tr>-->
