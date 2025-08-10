@@ -55,21 +55,34 @@
                 ?>
             </nav>
             <div class="order-1 order-xl-3">
-                <a class="decor" href="<?php echo esc_url( home_url('/wt-webtoffee-wishlist') ); ?>">
+                <?php
+                if ( class_exists( 'WT_Webtoffee_Wishlist' ) ) {
+                    $wishlist = WT_Webtoffee_Wishlist::get_instance();
+                    $items = $wishlist->get_wishlist_items();
+                    $wishlist_count = is_array($items) ? count($items) : 0;
+                } else {
+                    $wishlist_count = 0;
+                }
+                ?>
+
+                <a class="decor position-relative" href="<?php echo esc_url( home_url('/wt-webtoffee-wishlist') ); ?>">
                     <i class="esl-bookmark-heart esl-reg-2 icon ms-3"></i>
+                    <span class="wishlist-count"<?php if ($wishlist_count == 0) echo ' style="display:none;"'; ?>>
+        <?php echo esc_html( $wishlist_count ); ?>
+    </span>
                 </a>
                 <?php
-                $cart_url      = wc_get_cart_url();
-                $cart_count    = WC()->cart->get_cart_contents_count();
-
-                echo '<a class="decor position-relative" href="' . esc_url( $cart_url ) . '"><i class="esl-shopping-go esl-reg-2 icon ms-3"></i>';
-
-                if ( $cart_count > 0 ) {
-                    echo '<span class="cart-count">' . esc_html( $cart_count ) . '</span>';
-                }
-
-                echo '</a>';
+                $cart_url   = wc_get_cart_url();
+                $cart_count = WC()->cart->get_cart_contents_count();
                 ?>
+                <a class="decor position-relative" href="<?php echo esc_url( $cart_url ); ?>">
+                    <i class="esl-shopping-go esl-reg-2 icon ms-3"></i>
+                    <?php if ($cart_count > 0): ?>
+                        <span class="cart-count"><?php echo esc_html( $cart_count ); ?></span>
+                    <?php else: ?>
+                        <span class="cart-count" style="display:none;"></span>
+                    <?php endif; ?>
+                </a>
                 <a class="decor" href="<?php echo esc_url( get_permalink( get_option('woocommerce_myaccount_page_id') ) ); ?>">
                     <i class="esl-person esl-reg-2 icon ms-3"></i>
                 </a>

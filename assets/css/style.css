@@ -100,6 +100,19 @@ header .cart-count {
   border-radius: 50%;
   z-index: 10;
 }
+header .wishlist-count {
+  position: absolute;
+  top: -10px;
+  right: 0;
+  transform: translate(50%, -50%);
+  background-color: #FEC960;
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 9px;
+  border-radius: 50%;
+  z-index: 10;
+}
 
 .hero-section .hero-div {
   display: -webkit-box;
@@ -1069,12 +1082,32 @@ header .cart-count {
   color: #000;
 }
 
+.workbook-section {
+  background-color: #FAF8E6;
+  height: 560px;
+}
+.workbook-section .main-text {
+  background-color: #34568C;
+  color: #FFF;
+  padding: 90px;
+  width: 47%;
+}
+.workbook-section .main-text h1 {
+  font-family: "Montserrat-Bold", sans-serif;
+  font-size: 48px;
+}
+.workbook-section .main-text h1 span {
+  display: block;
+}
+
 #wishlist-toast {
   position: fixed;
   bottom: 80%;
   right: 50%;
-  background-color: #34568C;
-  color: #fff;
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+  border-radius: 10px;
   padding: 12px 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   opacity: 0;
@@ -1213,6 +1246,12 @@ header .cart-count {
     font-size: 50px;
   }
   .all-section .sub-block {
+    width: auto;
+  }
+  .workbook-section .main-text {
+    background-color: #34568C;
+    color: #FFF;
+    padding: 90px;
     width: auto;
   }
 }
@@ -1421,9 +1460,6 @@ header .cart-count {
   .workbooks .btn-suggest {
     padding: 15px 25px;
   }
-  .workbooks .cardpad {
-    padding: 10px;
-  }
   .connected-section {
     padding-bottom: 50px;
   }
@@ -1523,6 +1559,10 @@ header .cart-count {
   }
   .main-section .main-text h1 {
     font-size: 42px;
+  }
+  .workbook-section {
+    background-color: transparent;
+    height: auto;
   }
 }
 @media (min-width: 1200px) and (max-width: 1688px) {

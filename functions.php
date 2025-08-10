@@ -871,41 +871,119 @@ function woocommerce_template_single_title_custom() {
     echo '</div>';
 }
 
+
+
+add_filter( 'rwmb_meta_boxes', 'register_workbooks_baner_metabox' );
+function register_workbooks_baner_metabox( $meta_boxes ) {
+    $meta_boxes[] = [
+        'title'      => 'Banner workbook',
+        'id'         => 'workbook_banner_section',
+        'post_types' => ['page'],
+        'include'    => [
+            'template' => ['workbooks.php'],
+        ],
+        'fields'     => [
+            [
+                'id'   => 'workbook_banner_image',
+                'name' => 'Image',
+                'type' => 'single_image',
+                'max_file_uploads' => 1,
+            ],
+            [
+                'id'   => 'workbook_banner_title',
+                'name' => 'Title',
+                'type' => 'textarea',
+            ],
+            [
+                'id'   => 'workbook_banner_text',
+                'name' => 'Text',
+                'type' => 'wysiwyg',
+                'raw'  => false,
+            ],
+        ],
+    ];
+    return $meta_boxes;
+}
+
+remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
+add_action( 'woocommerce_before_main_content', 'custom_woocommerce_breadcrumb_container', 20 );
+
+function custom_woocommerce_breadcrumb_container() {
+    echo '<div class="container">';
+    woocommerce_breadcrumb();
+    echo '</div>';
+}
+
+remove_action( 'woocommerce_before_single_product', 'woocommerce_output_all_notices', 10 );
+
+add_action( 'woocommerce_before_single_product', 'custom_woocommerce_notices_inside_container', 10 );
+
+function custom_woocommerce_notices_inside_container() {
+    $notices = wc_get_notices();
+    if ( empty( $notices ) ) {
+        return;
+    }
+    echo '<div class="container">';
+    wc_print_notices();
+    echo '</div>';
+}
+
+add_action( 'wp_ajax_get_cart_count', 'ajax_get_cart_count' );
+add_action( 'wp_ajax_nopriv_get_cart_count', 'ajax_get_cart_count' );
+
+function ajax_get_cart_count() {
+    echo WC()->cart->get_cart_contents_count();
+    wp_die();
+}
+
 add_action('wp_footer', function () {
     if (!is_product()) return;
     ?>
-    <div id="wishlist-toast" class="wishlist-toast"></div>
+        <div id="wishlist-toast" class="wishlist-toast"></div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.body.addEventListener('click', function (e) {
-                const target = e.target.closest('.wt-wishlist-button');
-                if (target) {
-                    const toast = document.getElementById('wishlist-toast');
-                    if (!toast) return;
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.body.addEventListener('click', function (e) {
+                    const target = e.target.closest('.wt-wishlist-button');
+                    if (target) {
+                        const toast = document.getElementById('wishlist-toast');
+                        if (!toast) return;
 
-                    if (target.dataset.action === 'add') {
-                        toast.textContent = 'The item successfully added';
-                    } else if (target.dataset.action === 'remove') {
-                        toast.textContent = 'The item successfully removed';
-                    } else {
-                        return;
+                        if (target.dataset.action === 'add') {
+                            toast.textContent = 'The item successfully added';
+                        } else if (target.dataset.action === 'remove') {
+                            toast.textContent = 'The item successfully removed';
+                        } else {
+                            return;
+                        }
+
+                        toast.classList.add('show');
+                        setTimeout(() => {
+                            toast.classList.remove('show');
+                        }, 3000);
                     }
-
-                    toast.classList.add('show');
-                    setTimeout(() => {
-                        toast.classList.remove('show');
-                    }, 3000);
-                }
+                });
             });
-        });
-    </script>
-    <?php
+        </script>
+        <?php
 });
 
 
+add_action('wp_ajax_get_wishlist_count', 'custom_get_wishlist_count');
+add_action('wp_ajax_nopriv_get_wishlist_count', 'custom_get_wishlist_count');
 
+function custom_get_wishlist_count() {
+    global $wt_wishlist;
 
+    $count = 0;
+    if ( isset( $wt_wishlist ) && is_object( $wt_wishlist ) ) {
+        $items = $wt_wishlist->get_wishlist_items();
+        $count = is_array($items) ? count($items) : 0;
+    }
+
+    echo $count;
+    wp_die();
+}
 
 
 
