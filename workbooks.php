@@ -51,7 +51,7 @@ get_header();
                     <div class="position-relative pos-btn"><a href="#" class="btn btn-suggest">Suggest a topic!</a></div>
                 </div>
 
-                <form class="search-bar d-flex justify-content-center">
+                <form class="search-bar d-flex justify-content-center" id="smart-search-input">
                     <div class="input-group">
                 <span class="input-group-text">
                     <i class="esl-search esl-reg-1"></i>
@@ -61,7 +61,7 @@ get_header();
                 </form>
             </div>
         </div>
-        <div class="row cardbody">
+        <div class="row cardbody d-flex justify-content-center">
             <?php
             $args = array(
                 'post_type' => 'product',
@@ -74,9 +74,6 @@ get_header();
                     wc_get_template_part( 'content', 'product' );
                 endwhile;
                 wp_reset_postdata();?>
-                <div class="mt-4">
-                    <a href="#" class="btn btn-more">More Workbooks</a>
-                </div>
             <?php else :?>
                 <p>No Products</p>
             <?php endif;

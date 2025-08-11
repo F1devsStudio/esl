@@ -3218,6 +3218,9 @@ body:not(.search-results) .twentysixteen .entry-summary {
     }
     #my-account-container.my-view-order-container {
         background: #34568C;
+        h1{
+            color: #ffffff;
+        }
         img{
             width: 80px !important;
             height: 80px !important;

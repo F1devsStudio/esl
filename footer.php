@@ -17,7 +17,7 @@
         <div class="d-flex justify-content-center">
             <p class="mb-4 footer-text"> <?php echo get_theme_mod('footer_text'); ?></p>
         </div>
-            <?php if(is_home()):?>
+            <?php if(is_front_page()):?>
                 <h5 class="text-start mb-3"><?php echo get_theme_mod('footer_bold_subtitle'); ?><span>ED</span>!</h5>
                 <div class="contact-box mx-auto p-4">
                     <div class="ampersand">
@@ -25,8 +25,9 @@
                     </div>
                     <?= do_shortcode('[contact-form-7 id="1d7cbb2" title="leave us a message"]')?>
                 </div>
+            <?php elseif(is_page('contact')):?>
             <?php else:?>
-                <a href="" class="btn btn-explore">Connected</a>
+                <a href="<?= esc_url( home_url( '/contact/' ) ) ?>" class="btn btn-explore">Connected</a>
             <?php endif;?>
         <p class="mt-5 small mb-0">&copy; 2025 by CONNECTED.</p>
     </div>

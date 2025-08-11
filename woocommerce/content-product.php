@@ -24,7 +24,11 @@ if ( ! is_a( $product, WC_Product::class ) || ! $product->is_visible() ) {
 	return;
 }
 ?>
-<div <?php wc_product_class( 'col-md-3 py-4 cardpad', $product ); ?>>
+<?php if(is_front_page()):?>
+    <div <?php wc_product_class( 'col-md-4 py-4 cardpad', $product ); ?>>
+<?php else:?>
+    <div <?php wc_product_class( 'col-md-3 py-4 cardpad', $product ); ?>>
+<?php endif;?>
     <div class="card workbook-card">
         <div class="card-body">
             <div class="img-container">

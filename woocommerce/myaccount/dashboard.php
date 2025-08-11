@@ -31,7 +31,6 @@ $name = $user->first_name;
 $surname = $user->last_name;
 $current_avatar = get_avatar_url($user->ID, ['size' => 300]);
 $email = $user->user_email;
-$name = $user->display_name;
 $birthday = get_user_meta($user->ID, 'birthday', true);
 $gender = get_user_meta($user->ID, 'gender', true);
 $phone = get_user_meta($user->ID, 'billing_phone', true);

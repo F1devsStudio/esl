@@ -26,7 +26,7 @@ get_header();
                 <div class="position-relative pos-btn"><a href="#" class="btn btn-suggest">Suggest a topic!</a></div>
             </div>
 
-            <form class="search-bar d-flex justify-content-center">
+            <form class="search-bar d-flex justify-content-center" id="smart-search-input">
                 <div class="input-group">
                 <span class="input-group-text">
                     <i class="esl-search esl-reg-1"></i>
@@ -36,27 +36,29 @@ get_header();
             </form>
         </div>
     </div>
-    <div class="row cardbody">
-        <?php
-        $args = array(
-            'post_type' => 'product',
-            'posts_per_page' => 6,
-        );
-        $products = new WP_Query($args);
+    <div class="container d-flex justify-content-center">
+        <div class="row cardbody" style="width: 1000px">
+            <?php
+            $args = array(
+                'post_type' => 'product',
+                'posts_per_page' => 6,
+            );
+            $products = new WP_Query($args);
 
-        if ( $products->have_posts() ) :
-            while ( $products->have_posts() ) : $products->the_post();
-                wc_get_template_part( 'content', 'product' );
-            endwhile;
-            wp_reset_postdata();?>
-            <div class="mt-4">
-                <a href="#" class="btn btn-more">More Workbooks</a>
-                <i class="esl-arrow-right esl-reg arrow"></i>
-            </div>
-        <?php else :?>
-            <p>No Products</p>
-        <?php endif;
-        ?>
+            if ( $products->have_posts() ) :
+                while ( $products->have_posts() ) : $products->the_post();
+                    wc_get_template_part( 'content', 'product' );
+                endwhile;
+                wp_reset_postdata();?>
+                <div class="mt-4">
+                    <a href="<?= esc_url( home_url( '/workbooks/' ) ) ?>" class="btn btn-more">More Workbooks</a>
+                    <i class="esl-arrow-right esl-reg arrow"></i>
+                </div>
+            <?php else :?>
+                <p>No Products</p>
+            <?php endif;
+            ?>
+        </div>
     </div>
 </section>
 <section class="connected-section position-relative text-center text-md-start">
