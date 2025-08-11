@@ -22,4 +22,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $product;
 
 ?>
-<p class="<?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>"><?php echo $product->get_price_html(); ?></p>
+
+<li class="mb-5">
+    <p class="mb-1">Price:</p>
+    <div class="d-flex align-items-center">
+        <i class="esl-lock esl-reg-1 me-2"></i>
+        <?php
+        if ( $product->get_price() == 0 ) : ?>
+            FREE
+        <?php else : ?>
+            <?php echo $product->get_price_html(); ?>
+        <?php endif; ?>
+    </div>
+</li>
+</ul>

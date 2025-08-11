@@ -26,109 +26,76 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 ?>
 
-<section class="item-section py-5">
+<?php
+/**
+ * The template for displaying product content in the single-product.php template
+ *
+ * This template can be overridden by copying it to yourtheme/woocommerce/content-single-product.php.
+ *
+ * HOWEVER, on occasion WooCommerce will need to update template files and you
+ * (the theme developer) will need to copy the new files to your theme to
+ * maintain compatibility. We try to do this as little as possible, but it does
+ * happen. When this occurs the version of the template file will be bumped and
+ * the readme will list any important changes.
+ *
+ * @see     https://woocommerce.com/document/template-structure/
+ * @package WooCommerce\Templates
+ * @version 3.6.0
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+global $product;
+
+/**
+ * Hook: woocommerce_before_single_product.
+ *
+ * @hooked woocommerce_output_all_notices - 10
+ */
+do_action( 'woocommerce_before_single_product' );
+
+if ( post_password_required() ) {
+    echo get_the_password_form(); // WPCS: XSS ok.
+    return;
+}
+?>
+<section class="item-section pb-5" id="product-<?php the_ID(); ?>" <?php wc_product_class( '', $product ); ?>>
     <div class="container">
         <div class="row gx-5 align-items-stretch">
-            <!-- Left Column: Carousel -->
             <div class="col-md-6">
-                <div id="carouselItems" class="carousel slide mb-3" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <?php
-                        $main_image_id = $product->get_image_id();
-                        $gallery_image_ids = $product->get_gallery_image_ids();
-                        $image_ids = array_filter(array_merge([$main_image_id], is_array($gallery_image_ids) ? $gallery_image_ids : []));
-                        $image_ids = array_merge([$main_image_id], $gallery_image_ids);
-                        foreach ($image_ids as $index => $image_id) :
-                            $image_url = wp_get_attachment_image_url($image_id, 'large');
-                            ?>
-                            <div class="carousel-item <?php if ($index === 0) echo 'active'; ?>">
-                                <img src="<?php echo esc_url($image_url); ?>" class="d-block w-100" alt="product-image-<?php echo $index; ?>">
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <div class="thumb-gallery-wrapper mt-3">
-                    <div class="d-flex flex-nowrap overflow-auto gap-2">
-                        <?php foreach ($image_ids as $index => $image_id) :
-                            $thumb_url = wp_get_attachment_image_url($image_id, 'thumbnail');
-                            ?>
-                            <img src="<?php echo esc_url($thumb_url); ?>"
-                                 class="img-thumbnail thumb flex-shrink-0"
-                                 data-bs-target="#carouselItems" data-bs-slide-to="<?php echo esc_attr($index); ?>"
-                                 alt="thumb-<?php echo esc_attr($index); ?>">
-                        <?php endforeach; ?>
-                    </div>
-                </div>
+                <?php
+                /**
+                 * Hook: woocommerce_before_single_product_summary.
+                 *
+                 * @hooked woocommerce_show_product_sale_flash - 10
+                 * @hooked woocommerce_show_product_images - 20
+                 */
+                do_action( 'woocommerce_before_single_product_summary' );
+                ?>
             </div>
-
-            <!-- Right Column: Item Content -->
-            <div class="col-md-6 item-content">
-                <div class="d-flex">
-                    <h2 class="mb-4"><?php the_title(); ?></h2>
-                    <a href="#" class="webtoffee_wishlist wt-wishlist-button" data-product-id="<?php echo esc_attr( $product->get_id() ); ?>" data-variation-id="0" data-quantity="1" data-act="add_to_wishlist" data-action="add_to_wishlist">
-                        <i class="esl-bookmark-heart esl-reg-1 ms-2"></i>
-                    </a>
-                </div>
-                <ul class="list-unstyled mt-md-4">
-                    <li class="mb-5">
-                        <p class="mb-1">Level:</p>
-                        <div class="d-flex align-items-center">
-                            <i class="esl-level esl-reg-1 me-2"></i>
-                            <?php
-                            $level = wc_get_product_terms( $product->get_id(), 'pa_level', array('fields' => 'names') );
-                            if ( !empty($level) ) :?>
-                                <?= esc_html( $level[0] ); ?>
-                            <?php endif; ?>
-                        </div>
-                    </li>
-
-                    <li class="mb-5">
-                        <p class="mb-1">Time to complete the course:</p>
-                        <div class="d-flex align-items-center">
-                            <i class="esl-timer esl-reg-1 me-2"></i>
-                            <?php
-                            $time_spend = wc_get_product_terms( $product->get_id(), 'pa_time_spend', array('fields' => 'names') );
-                            if ( !empty($time_spend) ) {
-                                echo esc_html( $time_spend[0] );
-                            }
-                            ?>
-                        </div>
-                    </li>
-
-                    <li class="mb-5">
-                        <p class="mb-1">Price:</p>
-                        <div class="d-flex align-items-center">
-                            <i class="esl-lock esl-reg-1 me-2"></i>
-                            <?php
-                            if ( $product->get_price() == 0 ) : ?>
-                                FREE
-                            <?php else : ?>
-                                <?= $product->get_price_html(); ?>
-                            <?php endif; ?>
-                        </div>
-                    </li>
-                </ul>
-
-                <div class="text-center mt-4">
-                    <?php if ( is_user_logged_in() ) : ?>
-                        <form class="cart" method="post" enctype="multipart/form-data">
-                            <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>"
-                                    class="btn btn-login d-inline-flex align-items-center justify-content-center">
-                                ADD TO CART
-                            </button>
-                        </form>
-                    <?php else : ?>
-                        <a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>"
-                           class="btn btn-login d-inline-flex align-items-center justify-content-center">
-                            <i class="esl-key esl-reg-1 me-2"></i> LOG TO GET
-                        </a>
-                    <?php endif; ?>
-                </div>
+            <div class="summary col-md-6 item-content">
+                <?php
+                /**
+                 * Hook: woocommerce_single_product_summary.
+                 *
+                 * @hooked woocommerce_template_single_title - 5
+                 * @hooked woocommerce_template_single_rating - 10
+                 * @hooked woocommerce_template_single_price - 10
+                 * @hooked woocommerce_template_single_excerpt - 20
+                 * @hooked woocommerce_template_single_add_to_cart - 30
+                 * @hooked woocommerce_template_single_meta - 40
+                 * @hooked woocommerce_template_single_sharing - 50
+                 * @hooked WC_Structured_Data::generate_product_data() - 60
+                 */
+                do_action( 'woocommerce_single_product_summary' );
+                ?>
             </div>
         </div>
     </div>
 </section>
 
+
+<?php do_action( 'woocommerce_after_single_product' ); ?>
 
 <?php
 $materials = rwmb_meta( 'lesson_materials_group' );
@@ -157,10 +124,12 @@ $product_description = apply_filters( 'the_content', get_the_content() );
 $content_vocabulary = rwmb_meta( 'accordion_vocabulary_content' );
 $content_activities = rwmb_meta( 'accordion_activities_content' );
 $content_video = rwmb_meta( 'accordion_video_content' );
+$content_video_link = rwmb_meta( 'accordion_video_link' );
 $content_plans = rwmb_meta( 'accordion_plans_content' );
 $content_topics = rwmb_meta( 'accordion_topics_content' );
 
-if ( $content_vocabulary || $content_activities || $content_video || $content_plans || $content_topics ) :
+
+if ( $content_vocabulary || $content_activities || $content_video || $content_video_link || $content_plans || $content_topics ) :
     ?>
     <section class="get-section py-5">
         <div class="container">
@@ -210,7 +179,7 @@ if ( $content_vocabulary || $content_activities || $content_video || $content_pl
                         </div>
                     <?php endif; ?>
 
-                    <?php if ( $content_video ) : ?>
+                    <?php if ( $content_video_link || $content_video ) : ?>
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="flush-headingThree">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
@@ -218,9 +187,16 @@ if ( $content_vocabulary || $content_activities || $content_video || $content_pl
                                 </button>
                             </h2>
                             <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlush">
-                                <div class="accordion-body">
-                                    <?php echo wp_kses_post( $content_video ); ?>
-                                </div>
+                                <?php if ( $content_video_link || $content_video ) :?>
+                                    <div class="accordion-body">
+                                        <?php if ( $content_video_link ) :?>
+                                            <div class="ratio ratio-16x9">
+                                                <?php echo wp_oembed_get( esc_url( $content_video_link ) ); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if ( $content_video ) :echo wp_kses_post( $content_video );endif; ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -254,52 +230,132 @@ if ( $content_vocabulary || $content_activities || $content_video || $content_pl
                             </div>
                         </div>
                     <?php endif; ?>
-
                 </div>
             </div>
         </div>
     </section>
 <?php endif; ?>
-
-    <section class="pb-5">
-        <div class="container feedback-bg">
-            <div class="row">
-                <div class="col-12 align-items-md-center">
-                    <h2 class="mb-3">Leave a Feedback</h2>
-                    <div class="wpcf7">
-                        <?php echo do_shortcode('[contact-form-7 id="188236a" title="feedback"]'); ?>
-                    </div>
-                </div>
+<section class="pb-5">
+    <div class="container feedback-bg">
+        <div class="row">
+            <div class="col-12 align-items-md-center">
+                <h2 class="mb-3">Leave a Feedback</h2>
+                    <?php
+                    /**
+                     * Hook: woocommerce_after_single_product_summary.
+                     *
+                     * @hooked woocommerce_output_product_data_tabs - 10
+                     * @hooked woocommerce_upsell_display - 15
+                     * @hooked woocommerce_output_related_products - 20
+                     */
+                    do_action( 'woocommerce_after_single_product_summary' );
+                    ?>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 
 <?php
 get_footer();
 ?>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const hearts = document.querySelectorAll(".heart-icon");
+        const ratingInput = document.getElementById("ratingInput");
 
-<div id="product-<?php the_ID(); ?>" <?php wc_product_class( '', $product ); ?>>
+        hearts.forEach((heart, index) => {
+            heart.addEventListener("click", function (e) {
+                e.preventDefault();
+                const rating = heart.getAttribute("data-value");
+                ratingInput.value = rating;
 
-    <div class="summary entry-summary">
-        <?php
-        /**
-         * Hook: woocommerce_single_product_summary.
-         *
-         * @hooked woocommerce_template_single_title - 5
-         * @hooked woocommerce_template_single_rating - 10
-         * @hooked woocommerce_template_single_price - 10
-         * @hooked woocommerce_template_single_excerpt - 20
-         * @hooked woocommerce_template_single_add_to_cart - 30
-         * @hooked woocommerce_template_single_meta - 40
-         * @hooked woocommerce_template_single_sharing - 50
-         * @hooked WC_Structured_Data::generate_product_data() - 60
-         */
-        do_action( 'woocommerce_single_product_summary' );
-        ?>
-    </div>
+                hearts.forEach((h, i) => {
+                    if (i < rating) {
+                        h.classList.add("active");
+                    } else {
+                        h.classList.remove("active");
+                    }
+                });
+            });
+            heart.addEventListener("mouseenter", function () {
+                hearts.forEach((h, i) => {
+                    if (i <= index) {
+                        h.classList.add("active");
+                    } else {
+                        h.classList.remove("active");
+                    }
+                });
+            });
+            heart.addEventListener("mouseleave", function () {
+                hearts.forEach((h, i) => {
+                    if (parseInt(ratingInput.value) > i) {
+                        h.classList.add("active");
+                    } else {
+                        h.classList.remove("active");
+                    }
+                });
+            });
+        });
+    });
+</script>
 
-</div>
+<script>
+    jQuery(function($) {
+        function updateCartCount() {
+            fetch('<?php echo admin_url("admin-ajax.php?action=get_cart_count"); ?>')
+                .then(response => response.text())
+                .then(count => {
+                    const cartCountEl = document.querySelector('.cart-count');
+                    if (cartCountEl) {
+                        cartCountEl.textContent = count;
+                        if (count == 0) {
+                            cartCountEl.style.display = 'none';
+                        } else {
+                            cartCountEl.style.display = 'inline-block';
+                        }
+                    }
+                })
+                .catch(console.error);
+        }
+        updateCartCount();
+        $(document.body).on('added_to_cart removed_from_cart updated_wc_div updated_cart_totals', function() {
+            updateCartCount();
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const wishlistCountEl = document.querySelector('.wishlist-count');
+
+        function updateWishlistCount() {
+            fetch('<?php echo admin_url('admin-ajax.php'); ?>?action=get_wishlist_count')
+                .then(response => response.text())
+                .then(count => {
+                    if (!wishlistCountEl) return;
+
+                    count = parseInt(count);
+                    if (count > 0) {
+                        wishlistCountEl.textContent = count;
+                        wishlistCountEl.style.display = 'inline-block';
+                    } else {
+                        wishlistCountEl.textContent = '';
+                        wishlistCountEl.style.display = 'none';
+                    }
+                });
+        }
+
+        document.body.addEventListener('click', function (e) {
+            if (e.target.closest('.wt-wishlist-button')) {
+                setTimeout(updateWishlistCount, 1000);
+            }
+        });
+        updateWishlistCount();
+    });
+</script>
+
 
 
 

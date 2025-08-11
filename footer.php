@@ -53,20 +53,5 @@
     });
 </script>
 
-<script>
-    function updateCartCountCustom() {
-        fetch('<?php echo admin_url("admin-ajax.php?action=get_cart_count"); ?>')
-            .then(res => res.text())
-            .then(count => {
-                const cartCountEl = document.querySelector('.cart-count');
-                if (cartCountEl) {
-                    cartCountEl.textContent = count;
-                }
-            });
-    }
-
-    setInterval(updateCartCountCustom, 200);
-</script>
-
 </body>
 </html>

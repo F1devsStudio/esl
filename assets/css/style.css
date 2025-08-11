@@ -101,6 +101,19 @@ header .cart-count {
   border-radius: 50%;
   z-index: 10;
 }
+header .wishlist-count {
+  position: absolute;
+  top: -10px;
+  right: 0;
+  transform: translate(50%, -50%);
+  background-color: #FEC960;
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 9px;
+  border-radius: 50%;
+  z-index: 10;
+}
 
 .hero-section .hero-div {
   display: -webkit-box;
@@ -560,12 +573,15 @@ header .cart-count {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  align-items: center;
+  justify-content: space-between;
+}
+.item-section .item-content h1 {
+  font-family: "Montserrat-Bold", sans-serif;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .item-section .item-content ul li p {
   margin-bottom: 8px;
@@ -789,6 +805,9 @@ header .cart-count {
 .feedback-bg form .esl-heart-fe:hover .path1:before {
   color: #FEC960;
 }
+.feedback-bg form .esl-heart-fe:active .path1:before {
+  color: #FEC960;
+}
 .feedback-bg form .heart-label input {
   display: none;
 }
@@ -811,6 +830,35 @@ header .cart-count {
 .feedback-bg form .btn-send:hover {
   color: #fff;
   background-color: #34568C;
+}
+
+.heart-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.heart-icon:hover {
+  background-color: #FEC960;
+  color: #FAF8E6;
+}
+.heart-icon:active {
+  background-color: #FEC960;
+  color: #FAF8E6;
+}
+.heart-icon::before {
+  content: "❤";
+  font-size: 24px;
+  color: #FAF8E6;
+}
+.heart-icon.active {
+  background-color: #FEC960;
+  color: #FAF8E6;
 }
 
 .footer-mini {
@@ -1006,6 +1054,71 @@ header .cart-count {
   margin: 0;
 }
 
+.error .oops h2 {
+  font-family: "Montserrat-Bold", sans-serif;
+  font-size: 34px;
+  color: #34568C;
+}
+.error .text-error h1 {
+  font-family: "Montserrat-Bold", sans-serif;
+  font-size: 56px;
+}
+.error .looking-text p {
+  font-family: "Montserrat-Regular", sans-serif;
+}
+.error .btn-go-home {
+  padding: 10px 20px;
+  width: 60%;
+  background-color: #34568C;
+  color: #FFF;
+  margin: 0 auto;
+  border-radius: 0;
+}
+.error .btn-go-home:hover {
+  background-color: #FEC960;
+  color: #000;
+}
+
+.workbook-section {
+  background-color: #FAF8E6;
+  height: 560px;
+}
+.workbook-section .main-text {
+  background-color: #34568C;
+  color: #FFF;
+  padding: 90px;
+  width: 47%;
+}
+.workbook-section .main-text h1 {
+  font-family: "Montserrat-Bold", sans-serif;
+  font-size: 48px;
+}
+.workbook-section .main-text h1 span {
+  display: block;
+}
+
+#wishlist-toast {
+  position: fixed;
+  bottom: 80%;
+  right: 50%;
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+  border-radius: 10px;
+  padding: 12px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  z-index: 9999;
+  font-size: 14px;
+}
+
+#wishlist-toast.show {
+  opacity: 1;
+  visibility: visible;
+}
+
 @media (max-width: 575px) {
   .hero-section .hero-div {
     padding-top: 65px;
@@ -1130,6 +1243,12 @@ header .cart-count {
     font-size: 50px;
   }
   .all-section .sub-block {
+    width: auto;
+  }
+  .workbook-section .main-text {
+    background-color: #34568C;
+    color: #FFF;
+    padding: 90px;
     width: auto;
   }
 }
@@ -1338,9 +1457,6 @@ header .cart-count {
   .workbooks .btn-suggest {
     padding: 15px 25px;
   }
-  .workbooks .cardpad {
-    padding: 10px;
-  }
   .connected-section {
     padding-bottom: 50px;
   }
@@ -1440,6 +1556,10 @@ header .cart-count {
   }
   .main-section .main-text h1 {
     font-size: 42px;
+  }
+  .workbook-section {
+    background-color: transparent;
+    height: auto;
   }
 }
 @media (min-width: 1200px) and (max-width: 1688px) {

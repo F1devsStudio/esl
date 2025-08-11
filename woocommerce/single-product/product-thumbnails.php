@@ -49,5 +49,4 @@ $attachment_ids = $product->get_gallery_image_ids();
         }
     }
     ?>
-
 </div>

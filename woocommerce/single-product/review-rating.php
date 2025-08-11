@@ -23,5 +23,10 @@ global $comment;
 $rating = intval( get_comment_meta( $comment->comment_ID, 'rating', true ) );
 
 if ( $rating && wc_review_ratings_enabled() ) {
-	echo wc_get_rating_html( $rating ); // WPCS: XSS ok.
+    echo '<div class="custom-hearts">';
+    for ( $i = 1; $i <= 5; $i++ ) {
+        $class = $i <= $rating ? 'heart-icon active' : 'heart-icon';
+        echo '<i class="' . esc_attr( $class ) . '"></i>';
+    }
+    echo '</div>';
 }
