@@ -62,7 +62,7 @@ get_header();
             </div>
         </div>
         <div class="container">
-            <div class="row cardbody d-flex justify-content-center">
+            <div class="row cardbody">
                 <?php
                 $args = array(
                     'post_type' => 'product',
