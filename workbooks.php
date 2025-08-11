@@ -61,23 +61,25 @@ get_header();
                 </form>
             </div>
         </div>
-        <div class="row cardbody d-flex justify-content-center">
-            <?php
-            $args = array(
-                'post_type' => 'product',
-                'posts_per_page' => 6,
-            );
-            $products = new WP_Query($args);
+        <div class="container">
+            <div class="row cardbody d-flex justify-content-center">
+                <?php
+                $args = array(
+                    'post_type' => 'product',
+                    'posts_per_page' => 6,
+                );
+                $products = new WP_Query($args);
 
-            if ( $products->have_posts() ) :
-                while ( $products->have_posts() ) : $products->the_post();
-                    wc_get_template_part( 'content', 'product' );
-                endwhile;
-                wp_reset_postdata();?>
-            <?php else :?>
-                <p>No Products</p>
-            <?php endif;
-            ?>
+                if ( $products->have_posts() ) :
+                    while ( $products->have_posts() ) : $products->the_post();
+                        wc_get_template_part( 'content', 'product' );
+                    endwhile;
+                    wp_reset_postdata();?>
+                <?php else :?>
+                    <p>No Products</p>
+                <?php endif;
+                ?>
+            </div>
         </div>
     </section>
 <?php get_footer(); ?>
