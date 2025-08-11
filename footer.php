@@ -17,7 +17,7 @@
         <div class="d-flex justify-content-center">
             <p class="mb-4 footer-text"> <?php echo get_theme_mod('footer_text'); ?></p>
         </div>
-            <?php if(is_home()):?>
+            <?php if(is_front_page()):?>
                 <h5 class="text-start mb-3"><?php echo get_theme_mod('footer_bold_subtitle'); ?><span>ED</span>!</h5>
                 <div class="contact-box mx-auto p-4">
                     <div class="ampersand">
