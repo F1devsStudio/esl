@@ -179,7 +179,25 @@ F1devsesl_Kirki::add_field( 'f1devsesl_theme', array(
 					<a class="button button-primary button-hero" href="https://bootstrap-wp.com/downloads/f1devs-esl-pro/" target="_blank">Read More</a>',
 ) );
 
-
+//section: product settings
+F1devsesl_Kirki::add_section('product_settings', array(
+    'title'       => esc_html__('Product Settings', 'f1devs-esl'),
+    'priority'    => 200,
+));
+//field: products per category
+F1devsesl_Kirki::add_field('f1devsesl_theme', array(
+    'settings' => 'products_per_category',
+    'label'    => esc_html__('Number of Products to Show', 'f1devs-esl'),
+    'section'  => 'product_settings',
+    'type'     => 'number',
+    'default'  => 6,
+    'tooltip'  => esc_html__('type count of products', 'f1devs-esl'),
+    'choices'  => array(
+        'min'  => 1,
+        'max'  => 100,
+        'step' => 1,
+    ),
+));
 
 
 /**

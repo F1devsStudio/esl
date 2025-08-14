@@ -25,11 +25,11 @@ if ( ! is_a( $product, WC_Product::class ) || ! $product->is_visible() ) {
 }
 ?>
 <?php if(is_front_page()):?>
-    <div <?php wc_product_class( 'col-md-4 py-4 cardpad', $product ); ?>>
+    <div <?php wc_product_class( 'py-4 cardpad', $product ); ?>>
 <?php else:?>
     <div <?php wc_product_class( 'col-md-3 py-4 cardpad', $product ); ?>>
 <?php endif;?>
-    <div class="card workbook-card">
+    <div class="card workbook-card d-flex">
         <div class="card-body">
             <div class="img-container">
                 <div class="overlay"></div>

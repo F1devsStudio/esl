@@ -222,7 +222,7 @@ header .wishlist-count {
   font-family: "Montserrat-Bold", sans-serif;
   font-size: 48px;
   padding-bottom: 15px;
-  position: absolute;
+  /*position: absolute;*/
 }
 .workbooks .input-search {
   padding-bottom: 30px;

@@ -219,6 +219,9 @@ require get_template_directory() . '/inc/theme-options/add-settings.php';
 // Customizer additions.
 require get_template_directory() . '/inc/customizer.php';
 
+// Customizer additions.
+require get_template_directory() . '/f1-devs-functions.php';
+
 // Load Jetpack compatibility file.
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
