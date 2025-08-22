@@ -27,7 +27,7 @@ if ( ! is_a( $product, WC_Product::class ) || ! $product->is_visible() ) {
 <?php if(is_front_page()):?>
     <div <?php wc_product_class( 'py-4 cardpad', $product ); ?>>
 <?php else:?>
-    <div <?php wc_product_class( 'col-md-3 py-4 cardpad', $product ); ?>>
+    <div <?php wc_product_class( 'col-6 col-md-3 col-sm-6 py-4 cardpad', $product ); ?>>
 <?php endif;?>
     <div class="card workbook-card d-flex">
         <div class="card-body">
@@ -50,7 +50,7 @@ if ( ! is_a( $product, WC_Product::class ) || ! $product->is_visible() ) {
                         <?= $product->get_price_html(); ?>
                     <?php endif; ?>
                 </li>
-                <li>
+                <li style="height: 2lh">
                     <i class="esl-level esl-reg-1 me-2"></i>
                     <?php
                     $level = wc_get_product_terms( $product->get_id(), 'pa_level', array('fields' => 'names') );

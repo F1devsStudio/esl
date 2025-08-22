@@ -1,12 +1,30 @@
 @import url('fonts.css');
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: "Montserrat-Regular", sans-serif;
   overflow-x: hidden;
-  padding-top: 9%;
+  padding-top: 7%;
+}
+
+a{
+  text-decoration: none;
+  color: #000;
+}
+a:hover, a:active{
+  color: #34568C;
 }
 
 header {
   background-color: #FFF;
+}
+.y-line{
+  border-bottom: 2px solid #ffd93b6b;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);
 }
 header.navbar {
   position: fixed;
@@ -16,12 +34,16 @@ header.navbar {
   -webkit-transition: top 0.3s;
   transition: top 0.3s;
   z-index: 10;
+  padding: 15px 0;
 }
 header.navbar--hidden {
   top: -122px;
 }
 header .search {
   background-color: #FAF8E6;
+}
+header .search-form{
+  padding-left: 50px;
 }
 header .search .form-control {
   background-color: transparent;
@@ -84,51 +106,56 @@ header .icon.active, header .icon:hover {
   color: #34568C;
 }
 header .decor {
-  text-decoration: none;
-  color: #000;
+
 }
-header .cart-count {
+header .cart-count,
+header .wishlist-count{
   position: absolute;
-  top: -10px;
-  right: 0;
   -webkit-transform: translate(50%, -50%);
           transform: translate(50%, -50%);
   background-color: #FEC960;
   color: #000;
+  top: -10px;
   font-size: 12px;
-  font-weight: bold;
-  padding: 2px 9px;
   border-radius: 50%;
   z-index: 10;
 }
-header .wishlist-count {
-  position: absolute;
-  top: -10px;
-  right: 0;
-  transform: translate(50%, -50%);
-  background-color: #FEC960;
-  color: #000;
-  font-size: 12px;
+header .cart-count{
+  left: 10px;
   font-weight: bold;
   padding: 2px 9px;
-  border-radius: 50%;
-  z-index: 10;
+}
+header .wishlist-count {
+  left: -15px;
+  padding: 0px 6px;
+}
+header .navbar-toggler {
+  border: none;
+  background: none;
+  z-index: 5;
+}
+header .navbar-toggler:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+header .navbar-toggler.collapsed .icon-open {
+  display: inline;
+}
+header .navbar-toggler.collapsed .icon-close {
+  display: none;
+}
+header .navbar-toggler:not(.collapsed) .icon-open {
+  display: none;
+}
+header .navbar-toggler:not(.collapsed) .icon-close {
+  display: inline;
 }
 
 .hero-section .hero-div {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 .hero-section .hero-image {
   position: relative;
@@ -177,9 +204,9 @@ header .wishlist-count {
   max-width: 600px;
   border-bottom: 1px solid #34568C;
 }
-.search-bar .input-group:hover {
-  border: 1px solid #34568C;
-}
+/*.search-bar .input-group:hover {*/
+/*  border: 1px solid #34568C;*/
+/*}*/
 .search-bar .input-group .input-group-text {
   background-color: #fff;
   border: none;
@@ -218,17 +245,38 @@ header .wishlist-count {
           box-shadow: none;
 }
 
-.workbooks h2 {
+.workbooks h1 {
+  font-family: "Montserrat-Bold", sans-serif;
+}
+.workbooks h2{
   font-family: "Montserrat-Bold", sans-serif;
   font-size: 48px;
   padding-bottom: 15px;
   /*position: absolute;*/
 }
 .workbooks .input-search {
-  padding-bottom: 30px;
+  margin-bottom: 50px;
 }
 .workbooks .pos-btn {
-  padding-left: 70%;
+  position: absolute;
+  top: 0;
+  right: 100px;
+}
+.container-home{
+  width: 80%;
+  margin: 0 auto;
+}
+.workbooks .swiper{
+  position: unset;
+}
+.workbooks .swiper-button-prev {
+  left: -15%;
+}
+.workbooks .swiper-button-next {
+  right: -15%;
+}
+.swiper-button-prev, .swiper-button-next{
+  color: #9d9d9d !important;
 }
 .workbooks .cardpad {
   padding: 30px;
@@ -281,6 +329,7 @@ header .wishlist-count {
   color: #34568C;
   margin-bottom: 16px;
   margin-top: 16px;
+  height: 2lh;
 }
 .workbook-card ul li {
   font-size: 14px;
@@ -331,7 +380,6 @@ header .wishlist-count {
   padding-bottom: 50px;
 }
 .connected-section .bg-image {
-  background-image: url("../img/girls.avif");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top center;
@@ -842,12 +890,11 @@ header .wishlist-count {
   justify-content: center;
   align-items: center;
   position: relative;
+  cursor: pointer;
 }
-.heart-icon:hover {
-  background-color: #FEC960;
-  color: #FAF8E6;
-}
-.heart-icon:active {
+.heart-icon:hover,
+.heart-icon:active,
+.heart-icon.active{
   background-color: #FEC960;
   color: #FAF8E6;
 }
@@ -856,9 +903,9 @@ header .wishlist-count {
   font-size: 24px;
   color: #FAF8E6;
 }
-.heart-icon.active {
-  background-color: #FEC960;
-  color: #FAF8E6;
+
+.form-check-input{
+  cursor: pointer;
 }
 
 .footer-mini {
@@ -967,7 +1014,7 @@ header .wishlist-count {
 .main-section .main-text {
   background-color: #34568C;
   color: #FFF;
-  padding: 80px 250px 80px 250px;
+  padding: 50px;
 }
 .main-section .main-text h1 {
   font-family: "Montserrat-Bold", sans-serif;
@@ -1081,19 +1128,18 @@ header .wishlist-count {
 
 .workbook-section {
   background-color: #FAF8E6;
-  height: 560px;
+  padding-bottom: 30px;
 }
 .workbook-section .main-text {
   background-color: #34568C;
   color: #FFF;
-  padding: 90px;
-  width: 47%;
+  padding: 50px;
 }
-.workbook-section .main-text h1 {
+.workbook-section .main-text h2 {
   font-family: "Montserrat-Bold", sans-serif;
   font-size: 48px;
 }
-.workbook-section .main-text h1 span {
+.workbook-section .main-text h2 span {
   display: block;
 }
 
@@ -1117,6 +1163,51 @@ header .wishlist-count {
 #wishlist-toast.show {
   opacity: 1;
   visibility: visible;
+}
+
+#pagination .woocommerce-pagination .page-numbers {
+  border: none;
+  gap: 10px;
+}
+#pagination .page-numbers li{
+  border: none;
+  padding: 0 15px;
+}
+#pagination .page-numbers li a,
+#pagination .page-numbers li span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 50%;
+  color: #1C1C1C;
+  font-weight: 700;
+}
+#pagination .page-numbers .current {
+  background: #fec960;
+  color: #fff;
+  box-shadow: 0 4px 12px rgb(254 201 96 / 28%);
+}
+#pagination .page-numbers a:hover,
+#pagination .page-numbers a:focus {
+  background: #fec960;
+  color: #fff;
+}
+#pagination .page-numbers .dots {
+  background: transparent;
+  color: rgba(28,28,28,.55);
+  pointer-events: none;
+}
+
+
+.woocommerce-ordering .orderby {
+  border-radius: 50px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  cursor: pointer;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 @media (max-width: 575px) {
@@ -1320,12 +1411,6 @@ header .wishlist-count {
   .workbooks h2 {
     font-size: 42px;
   }
-  .workbooks .pos-btn {
-    padding-left: 82%;
-  }
-  .workbooks .btn-suggest {
-    font-size: 20px;
-  }
   .footer-section .custom-container {
     width: 77%;
   }
@@ -1344,8 +1429,8 @@ header .wishlist-count {
   body.menu-open {
     overflow: hidden;
   }
-  header.navbar {
-    height: 67px;
+  header .search-form{
+    padding-left: 0;
   }
   header .navbar-brand .logo-img {
     height: 50px;
@@ -1385,31 +1470,9 @@ header .wishlist-count {
     visibility: visible;
     overflow-y: auto;
   }
-  header .navbar-toggler {
-    border: none;
-    background: none;
-    z-index: 5;
-    position: absolute;
-    top: 16px;
-    right: 16px;
-  }
-  header .navbar-toggler:focus {
-    -webkit-box-shadow: none;
-            box-shadow: none;
-  }
-  header .navbar-toggler.collapsed .icon-open {
-    display: inline;
-  }
-  header .navbar-toggler.collapsed .icon-close {
-    display: none;
-  }
-  header .navbar-toggler:not(.collapsed) .icon-open {
-    display: none;
-  }
-  header .navbar-toggler:not(.collapsed) .icon-close {
-    display: inline;
-  }
+
   header nav.d-flex {
+    padding: 30px 0;
     text-align: center;
   }
   header .nav-link {
@@ -1452,7 +1515,8 @@ header .wishlist-count {
     position: static;
   }
   .workbooks .pos-btn {
-    padding-left: 0;
+    position: inherit;
+    right: 0;
   }
   .workbooks .btn-suggest {
     padding: 15px 25px;
@@ -1571,6 +1635,11 @@ header .wishlist-count {
   }
   .main-section .main-text {
     padding: 50px 40px;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .workbooks .pos-btn {
+    right: 55px;
   }
 }
 @media (min-width: 1200px) and (max-width: 1920px) {

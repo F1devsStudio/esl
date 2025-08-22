@@ -6,7 +6,7 @@ get_header();
 ?>
 
 <section class="main-section">
-    <div class="container-fluid">
+    <div class="container">
         <?php
         // Meta Box
         $title      = rwmb_get_value( 'about_banner_title' );

@@ -440,6 +440,110 @@ function register_about_first_metabox( $meta_boxes ) {
     return $meta_boxes;
 }
 
+add_filter( 'rwmb_meta_boxes', 'register_homepage_metabox' );
+function register_homepage_metabox( $meta_boxes ) {
+    $meta_boxes[] = [
+        'title'      => 'Main banner',
+        'id'         => 'home_banner_section',
+        'post_types' => ['page'],
+        'include'    => [
+            'template' => ['page-templates/home.php'],
+        ],
+        'fields'     => [
+            [
+                'id'   => 'home_banner_image',
+                'name' => 'Image',
+                'type' => 'single_image',
+                'max_file_uploads' => 1,
+            ],
+            [
+                'id'   => 'home_banner_title',
+                'name' => 'Title',
+                'type' => 'text',
+            ],
+            [
+                'id'   => 'home_banner_desc',
+                'name' => 'Description',
+                'type' => 'textarea',
+                'raw'  => false,
+            ],
+            [
+                'id'   => 'home_banner_btn_title',
+                'name' => 'Button title',
+                'type' => 'text',
+            ],
+            [
+                'id'   => 'home_banner_btn_link',
+                'name' => 'Button link',
+                'type'       => 'post',
+                'post_type'  => 'page',
+                'field_type' => 'select_advanced',
+                'multiple'   => false,
+                'visible'    => ['cta_link_type', '=', 'page'],
+            ],
+
+            // Products section title
+            [
+                'type' => 'heading',
+                'name' => 'Products section title',
+            ],
+            [
+                'id'   => 'products_section_title',
+                'name' => 'Title',
+                'type' => 'text',
+            ],
+
+            // Bottom banner
+            [
+                'type' => 'heading',
+                'name' => 'Bottom banner',
+            ],
+            [
+                'id'   => 'home_bottom_banner_image',
+                'name' => 'Image',
+                'type' => 'single_image',
+                'max_file_uploads' => 1,
+            ],
+            [
+                'id'   => 'home_bottom_banner_title',
+                'name' => 'Title',
+                'type' => 'text',
+                'placeholder' => 'Find out more about CONNECT[accent]ED[/accent]',
+            ],
+            [
+                'id'   => 'home_bottom_banner_desc',
+                'name' => 'Description',
+                'type' => 'wysiwyg',
+                'raw'  => true,
+                'options' => [
+                    'textarea_rows' => 10,
+                    'teeny'         => false,
+                    'tinymce'       => [
+                        'toolbar1'         => 'formatselect fontsizeselect bold italic bullist numlist blockquote alignleft aligncenter alignright link unlink wp_more',
+                        'toolbar2'         => 'strikethrough hr forecolor pastetext removeformat charmap outdent indent undo redo wp_help',
+                        'fontsize_formats' => '12px 14px 16px 18px 20px 24px 28px 32px',
+                    ],
+                ],
+            ],
+            [
+                'id'   => 'home_bottom_btn_title',
+                'name' => 'Button title',
+                'type' => 'text',
+            ],
+            [
+                'id'   => 'home_bottom_btn_link',
+                'name' => 'Button link',
+                'type'       => 'post',
+                'post_type'  => 'page',
+                'field_type' => 'select_advanced',
+                'multiple'   => false,
+                'visible'    => ['cta_link_type', '=', 'page'],
+            ],
+        ],
+    ];
+    return $meta_boxes;
+}
+
 add_filter( 'rwmb_meta_boxes', 'register_about_story_metabox' );
 
 function register_about_story_metabox( $meta_boxes ) {
@@ -448,7 +552,7 @@ function register_about_story_metabox( $meta_boxes ) {
         'id'         => 'our_story_section',
         'post_types' => ['page'],
         'include'    => [
-            'template' => ['about.php'],
+            'template' => ['page-templates/about.php'],
         ],
         'fields'     => [
             [
@@ -903,12 +1007,14 @@ function woocommerce_template_single_title_custom() {
 
 add_filter( 'rwmb_meta_boxes', 'register_workbooks_baner_metabox' );
 function register_workbooks_baner_metabox( $meta_boxes ) {
+    $shop_id = function_exists('wc_get_page_id') ? wc_get_page_id('shop') : 0;
     $meta_boxes[] = [
         'title'      => 'Banner workbook',
         'id'         => 'workbook_banner_section',
         'post_types' => ['page'],
         'include'    => [
-            'template' => ['workbooks.php'],
+            'relation' => 'AND',
+            'ID'       => [ $shop_id ],
         ],
         'fields'     => [
             [
@@ -1062,3 +1168,29 @@ add_action('woocommerce_my_account_my_orders_column_order-name', function($order
 add_action('woocommerce_my_account_my_orders_column_order-num-date', function($order){
     printf('<div>№ %s</div><div>%s</div>', esc_html($order->get_order_number()), esc_html(wc_format_datetime($order->get_date_created(), 'd.m.Y')));
 });
+
+
+add_filter( 'loop_shop_per_page', 'new_loop_shop_per_page', 20 );
+
+function new_loop_shop_per_page( $cols ) {
+    $cols = get_theme_mod( 'products_per_category', 3 );;
+    return $cols;
+}
+
+// Add before / after for results & sort
+add_action( 'woocommerce_before_shop_loop', 'f1devsesl_woocommerce_before_sort_result', 19 );
+add_action( 'woocommerce_before_shop_loop', 'f1devsesl_woocommerce_after_sort_result', 31 );
+if ( ! function_exists( 'f1devsesl_woocommerce_before_sort_result' ) ) {
+function f1devsesl_woocommerce_before_sort_result() {
+    ?>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <?php
+        }
+        }
+        if ( ! function_exists( 'f1devsesl_woocommerce_after_sort_result' ) ) {
+        function f1devsesl_woocommerce_after_sort_result() {
+        ?>
+    </div>
+    <?php
+}
+}

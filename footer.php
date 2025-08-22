@@ -44,10 +44,13 @@
 
         if (!navbar) return;
 
+        if (currentScrollPos === 0) {
+            navbar.classList.remove("y-line");
+        }
         if (prevScrollPos > currentScrollPos) {
             navbar.classList.remove("navbar--hidden");
         } else {
-            navbar.classList.add("navbar--hidden");
+            navbar.classList.add("navbar--hidden", "y-line");
         }
 
         prevScrollPos = currentScrollPos;

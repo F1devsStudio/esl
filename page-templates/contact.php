@@ -11,7 +11,7 @@ get_header(); ?>
             <h1 class="mb-3"><?php the_title(); ?></h1>
             <div class="contact-info">
                 <p><span>Email:</span> <?php echo get_theme_mod('contact_email'); ?></p>
-                <p><span>Phone:</span> <?php echo get_theme_mod('contact_phone'); ?></p>
+<!--                <p><span>Phone:</span> --><?php //echo get_theme_mod('contact_phone'); ?><!--</p>-->
                 <p><span>Adress:</span> <?php echo get_theme_mod('contact_address'); ?></p>
             </div>
             <h5 class="mt-5"><?php echo get_theme_mod('contact_message'); ?></h5>

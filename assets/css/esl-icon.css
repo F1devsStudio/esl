@@ -26,107 +26,106 @@ i {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
 .esl-edit:before {
-  content: "\e919";
+  content: "\e908";
 }
 .esl-order:before {
-  content: "\e91b";
+  content: "\e912";
 }
 .esl-home:before {
-  content: "\e91d";
+  content: "\e90b";
 }
 .esl-add:before {
-  content: "\e90e";
+  content: "\e901";
 }
 .esl-delete:before {
-  content: "\e916";
+  content: "\e907";
 }
 .esl-see-all:before {
   content: "\e918";
 }
-.esl-view:before {
-  content: "\e91a";
-}
 .esl-profile:before {
-  content: "\e91c";
-}
-.esl-heart-fe .path1:before {
-  content: "\e906";
-  color: #fff;
-}
-.esl-heart-fe .path2:before {
-  content: "\e907";
-  margin-left: -1em;
-  color: #000;
-}
-.esl-shopping-go:before {
-  content: "\e908";
-}
-.esl-mini-logo:before {
-  content: "\e905";
-}
-.esl-timer:before {
-  content: "\e904";
-}
-.esl-burger:before {
-  content: "\e901";
-}
-.esl-close:before {
-  content: "\e902";
-}
-.esl-search:before {
-  content: "\e903";
-}
-.esl-vacablury:before {
-  content: "\e900";
-}
-.esl-lock:before {
-  content: "\e909";
-}
-.esl-unlock:before {
-  content: "\e90b";
-}
-.esl-arrow-down:before {
-  content: "\e90c";
-}
-.esl-arrow-right:before {
-  content: "\e90d";
-}
-.esl-activities:before {
-  content: "\e90a";
-}
-.esl-bookmark-heart:before {
-  content: "\e90f";
-}
-.esl-folder:before {
-  content: "\e910";
-}
-.esl-todo-list:before {
-  content: "\e911";
-}
-.esl-youtube:before {
-  content: "\e912";
-}
-.esl-pdf:before {
-  content: "\e913";
-}
-.esl-level:before {
   content: "\e914";
 }
-.esl-key:before {
+.esl-heart-fe:before {
+  content: "\e90a";
+}
+.esl-shopping-go:before {
+  content: "\e919";
+}
+.esl-mini-logo:before {
+  content: "\e911";
+}
+.esl-timer:before {
+  content: "\e91b";
+}
+.esl-burger:before {
+  content: "\e905";
+}
+.esl-close:before {
+  content: "\e906";
+}
+.esl-search:before {
+  content: "\e917";
+}
+.esl-vacablury:before {
+  content: "\e91a";
+}
+.esl-lock:before {
   content: "\e915";
 }
+.esl-unlock:before {
+  content: "\e916";
+}
+.esl-arrow-down:before {
+  content: "\e902";
+}
+.esl-arrow-right:before {
+  content: "\e903";
+}
+.esl-activities:before {
+  content: "\e900";
+}
+.esl-bookmark-heart:before {
+  content: "\e904";
+}
+.esl-folder:before {
+  content: "\e909";
+}
+.esl-todo-list:before {
+  content: "\e90c";
+}
+.esl-youtube:before {
+  content: "\e90d";
+}
+.esl-pdf:before {
+  content: "\e90e";
+}
+.esl-level:before {
+  content: "\e90f";
+}
+.esl-key:before {
+  content: "\e910";
+}
 .esl-person:before {
-  content: "\e917";
+  content: "\e913";
+}
+.esl-view:before {
+  content: "\e91c";
 }
 
 
 .esl-reg {
-  font-size: 0.62em;
+  font-size: 1em;
 }
 
 .esl-reg-1 {
   font-size: 1.45em;
+}
+
+.esl-reg-1_5 {
+  font-size: 1.65em;
 }
 
 .esl-reg-2 {

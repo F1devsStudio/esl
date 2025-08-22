@@ -161,36 +161,50 @@ F1devsesl_Kirki::add_field( 'f1devsesl_theme', array(
 
 
 
-
-F1devsesl_Kirki::add_section( 'upgrade_theme', array(
-    'title'          => esc_html__( 'Get More Features', 'f1devs-esl' ),
-    'panel'          => '',
-    'capability'     => 'edit_theme_options',
-    'theme_supports' => '',
-	'priority'		 => 500
-) );
-
-F1devsesl_Kirki::add_field( 'f1devsesl_theme', array(
-	'settings' => 'pro_features',
-	'section'  => 'upgrade_theme',
-	'type'     => 'custom',
-    'default'  => '<h2 class="wp-bp-region-title first-region-title">' . esc_html__( 'Upgrade To Pro', 'f1devs-esl' ) . '</h2>
-					<p>Let\'s make your website even better with the pro version of this theme.</p>
-					<a class="button button-primary button-hero" href="https://bootstrap-wp.com/downloads/f1devs-esl-pro/" target="_blank">Read More</a>',
-) );
+//
+//F1devsesl_Kirki::add_section( 'upgrade_theme', array(
+//    'title'          => esc_html__( 'Get More Features', 'f1devs-esl' ),
+//    'panel'          => '',
+//    'capability'     => 'edit_theme_options',
+//    'theme_supports' => '',
+//	'priority'		 => 500
+//) );
+//
+//F1devsesl_Kirki::add_field( 'f1devsesl_theme', array(
+//	'settings' => 'pro_features',
+//	'section'  => 'upgrade_theme',
+//	'type'     => 'custom',
+//    'default'  => '<h2 class="wp-bp-region-title first-region-title">' . esc_html__( 'Upgrade To Pro', 'f1devs-esl' ) . '</h2>
+//					<p>Let\'s make your website even better with the pro version of this theme.</p>
+//					<a class="button button-primary button-hero" href="https://bootstrap-wp.com/downloads/f1devs-esl-pro/" target="_blank">Read More</a>',
+//) );
 
 //section: product settings
 F1devsesl_Kirki::add_section('product_settings', array(
     'title'       => esc_html__('Product Settings', 'f1devs-esl'),
     'priority'    => 200,
 ));
-//field: products per category
+//field: products per category on home slider
 F1devsesl_Kirki::add_field('f1devsesl_theme', array(
-    'settings' => 'products_per_category',
-    'label'    => esc_html__('Number of Products to Show', 'f1devs-esl'),
+    'settings' => 'products_per_category_slider',
+    'label'    => esc_html__('Products to show on Home slider', 'f1devs-esl'),
     'section'  => 'product_settings',
     'type'     => 'number',
     'default'  => 6,
+    'tooltip'  => esc_html__('type count of products', 'f1devs-esl'),
+    'choices'  => array(
+        'min'  => 1,
+        'max'  => 100,
+        'step' => 1,
+    ),
+));
+//field: products per category
+F1devsesl_Kirki::add_field('f1devsesl_theme', array(
+    'settings' => 'products_per_category',
+    'label'    => esc_html__('Products to show in the category', 'f1devs-esl'),
+    'section'  => 'product_settings',
+    'type'     => 'number',
+    'default'  => 12,
     'tooltip'  => esc_html__('type count of products', 'f1devs-esl'),
     'choices'  => array(
         'min'  => 1,

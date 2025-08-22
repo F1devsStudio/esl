@@ -28,24 +28,26 @@ if ( $total <= 1 ) {
 	return;
 }
 ?>
-<nav class="woocommerce-pagination" aria-label="<?php esc_attr_e( 'Product Pagination', 'woocommerce' ); ?>">
-	<?php
-	echo paginate_links(
-		apply_filters(
-			'woocommerce_pagination_args',
-			array( // WPCS: XSS ok.
-				'base'      => $base,
-				'format'    => $format,
-				'add_args'  => false,
-				'current'   => max( 1, $current ),
-				'total'     => $total,
-				'prev_text' => is_rtl() ? '&rarr;' : '&larr;',
-				'next_text' => is_rtl() ? '&larr;' : '&rarr;',
-				'type'      => 'list',
-				'end_size'  => 3,
-				'mid_size'  => 3,
-			)
-		)
-	);
-	?>
-</nav>
+<section id="pagination" class="mb-4">
+    <nav class="woocommerce-pagination" aria-label="<?php esc_attr_e( 'Product Pagination', 'woocommerce' ); ?>">
+        <?php
+        echo paginate_links(
+            apply_filters(
+                'woocommerce_pagination_args',
+                array( // WPCS: XSS ok.
+                    'base'      => $base,
+                    'format'    => $format,
+                    'add_args'  => false,
+                    'current'   => max( 1, $current ),
+                    'total'     => $total,
+                    'prev_text' => is_rtl() ? '&rarr;' : '&larr;',
+                    'next_text' => is_rtl() ? '&larr;' : '&rarr;',
+                    'type'      => 'list',
+                    'end_size'  => 3,
+                    'mid_size'  => 3,
+                )
+            )
+        );
+        ?>
+    </nav>
+</section>

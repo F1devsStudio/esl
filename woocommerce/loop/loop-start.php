@@ -19,4 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<ul class="products columns-<?php echo esc_attr( wc_get_loop_prop( 'columns' ) ); ?>">
+<section class="workbooks text-center pb-5">
+    <div class="container products">
+        <div class="row">
