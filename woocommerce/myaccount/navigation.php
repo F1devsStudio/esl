@@ -26,10 +26,17 @@ do_action( 'woocommerce_before_account_navigation' );
 	<ul class="d-flex flex-lg-row flex-column justify-content-center align-items-center">
 		<?php foreach ( wc_get_account_menu_items() as $endpoint => $label ) : ?>
 			<li class="px-5 <?php echo wc_get_account_menu_item_classes( $endpoint ); ?>">
-				<a class="d-flex align-items-center" href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>" <?php echo wc_is_current_account_menu_item( $endpoint ) ? 'aria-current="page"' : ''; ?>>
+                <?php if($endpoint == 'logout'):?>
+                <a class="d-flex align-items-center" href="<?php echo esc_url( wp_logout_url(home_url()) ); ?>" <?php echo wc_is_current_account_menu_item( $endpoint ) ? 'aria-current="page"' : ''; ?>>
                     <i class="<?php echo esc_attr( $icons[$endpoint] ); ?>" aria-hidden="true"></i>
                     <div><?php echo esc_html( $label ); ?></div>
 				</a>
+                <?php else:?>
+                    <a class="d-flex align-items-center" href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>" <?php echo wc_is_current_account_menu_item( $endpoint ) ? 'aria-current="page"' : ''; ?>>
+                        <i class="<?php echo esc_attr( $icons[$endpoint] ); ?>" aria-hidden="true"></i>
+                        <div><?php echo esc_html( $label ); ?></div>
+                    </a>
+				<?php endif; ?>
 			</li>
 		<?php endforeach; ?>
 	</ul>

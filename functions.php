@@ -298,7 +298,7 @@ function custom_my_account_menu_items( $items ) {
     $new_items['edit-account'] = __('Profile', 'woocommerce');
     $new_items['webtoffee-wishlist'] = __('Wish list', 'woocommerce');
     $new_items['orders'] = __('Orders', 'woocommerce');
-    $new_items['logout'] = __('Logout', 'woocommerce');
+    $new_items['logout'] = $items['customer-logout'];
 
     return $new_items;
 }
