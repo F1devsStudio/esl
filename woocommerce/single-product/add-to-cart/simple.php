@@ -32,19 +32,13 @@ if ( $product->is_in_stock() ) : ?>
 	<form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
 		<?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
         <div class="text-center">
-            <?php if ( is_user_logged_in() ) : ?>
                 <button type="submit"
                         name="add-to-cart"
                         value="<?php echo esc_attr( $product->get_id() ); ?>"
                         class="btn btn-login d-inline-flex align-items-center justify-content-center mt-2">
                     <?php echo esc_html( $product->single_add_to_cart_text() ); ?>
                 </button>
-            <?php else : ?>
-                <a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>"
-                   class="btn btn-login d-inline-flex align-items-center justify-content-center mt-2">
-                    <i class="esl-key esl-reg-1 me-2"></i> LOG TO GET
-                </a>
-            <?php endif; ?>
+
         </div>
 		<?php do_action( 'woocommerce_after_add_to_cart_button' ); ?>
 	</form>

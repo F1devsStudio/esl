@@ -59,7 +59,6 @@
 .woocommerce img,
 .woocommerce-page img {
     height: auto;
-    max-width: 100%
 }
 
 .woocommerce #content div.product div.images,
@@ -427,8 +426,6 @@
 
 .woocommerce .cart-collaterals .cart_totals,
 .woocommerce-page .cart-collaterals .cart_totals {
-    float: right;
-    width: 48%
 }
 
 .woocommerce ul.cart_list li::after,

@@ -87,6 +87,30 @@ add_action('init', function (){
     add_action('woocommerce_account_webtoffee-wishlist_endpoint', 'custom_endpoint_content');
 });
 
+function custom_shortcode_content(){
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'wt_wishlists';
+    $user = get_current_user_id();
+    if(is_user_logged_in()){
+        $products = $wpdb->get_results("SELECT * FROM `$table_name` where `user_id` = '$user'", ARRAY_A);
+    }else{
+        $table_name = $wpdb->prefix . 'wt_guest_wishlists';
+        $session_id = WC()->session->get('sessionid');
+        $products = $wpdb->get_results("SELECT * FROM `$table_name` where `session_id` = '$session_id'", ARRAY_A);
+    }
+    ob_start();
+    $custom_page = get_template_directory() . '/woocommerce/myaccount/wishlist-account-view-frontend.php';
+    if ( file_exists($custom_page) ) {
+        require_once($custom_page);
+    }
+    return ob_get_clean();
+}
+
+add_action('init', function (){
+   remove_shortcode('wt_mywishlist');
+   add_shortcode('wt_mywishlist', 'custom_shortcode_content');
+});
+
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
  *
@@ -266,7 +290,7 @@ add_action( 'wp_enqueue_scripts', 'wp_enqueue_woocommerce_style');
 function custom_my_account_menu_items( $items ) {
     unset($items['downloads']);
     unset($items['edit-address']);
-    unset($items['customer-logout']);
+//    unset($items['customer-logout']);
 
     $new_items = array();
 
@@ -274,6 +298,7 @@ function custom_my_account_menu_items( $items ) {
     $new_items['edit-account'] = __('Profile', 'woocommerce');
     $new_items['webtoffee-wishlist'] = __('Wish list', 'woocommerce');
     $new_items['orders'] = __('Orders', 'woocommerce');
+    $new_items['logout'] = __('Logout', 'woocommerce');
 
     return $new_items;
 }
@@ -290,7 +315,8 @@ function custom_wc_account_menu_icons() {
         'dashboard'          => 'esl-home esl-reg-1',
         'orders'             => 'esl-order esl-reg-1',
         'edit-account'       => 'esl-profile esl-reg-1',
-        'webtoffee-wishlist' => 'esl-bookmark-heart esl-reg-1'
+        'webtoffee-wishlist' => 'esl-bookmark-heart esl-reg-1',
+        'logout'             => 'esl-person esl-reg-1',
     );
 }
 

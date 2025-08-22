@@ -110,8 +110,8 @@ $show_customer_details = $order->get_user_id() === get_current_user_id();
 				?>
                     <?php if($key == 'order_total'):?>
 					    <tr>
-					    	<td scope="row"><?php echo esc_html( $total['label'] ); ?></td>
                             <td></td>
+                            <td scope="row"><?php echo esc_html( $total['label'] ); ?></td>
 					    	<td><?php echo wp_kses_post( $total['value'] ); ?></td>
 					    </tr>
                     <?php endif;?>

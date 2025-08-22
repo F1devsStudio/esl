@@ -7,7 +7,7 @@ global $wt_wishlist_table_settings_options;
 $wishlist_text = apply_filters('wishlist_table_heading','Wish list');
 ?>
 <?php global $wp?>
-<?php if (isset($wp->query_vars['webtoffee-wishlist'])): ?>
+<?php if (isset($wp->query_vars['webtoffee-wishlist']) || is_page('wt-webtoffee-wishlist')): ?>
     <h2><?php esc_html_e($wishlist_text, 'wt-woocommerce-wishlist'); ?></h2>
 <?php else: ?>
     <div class="d-flex flex-between align-items-center justify-content-between">
@@ -19,13 +19,15 @@ $wishlist_text = apply_filters('wishlist_table_heading','Wish list');
     <form action="">
         <table class="wt_frontend_wishlist_table" >
             <colgroup>
-                <col style="width: 20%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
                 <col style="width: 20%;">
                 <col style="width: 20%;">
                 <col style="width: 20%;">
                 <col style="width: 20%;">
             </colgroup>
             <tr class="wishlist-header d-none d-lg-table-row">
+                <th></th>
                 <th></th>
                 <th><?php esc_html_e('Product name', 'wt-woocommerce-wishlist'); ?></th>
                 <?php if(isset($wt_wishlist_table_settings_options['wt_enable_unit_price_column'])==1){ ?> <th><?php esc_html_e('Price', 'wt-woocommerce-wishlist'); ?></th> <?php } ?>
@@ -38,6 +40,9 @@ $wishlist_text = apply_filters('wishlist_table_heading','Wish list');
                 if ($product_data) {
                     ?>
                     <tr class="wishlist-product">
+                        <td>
+                            <a href='#' ><i class='esl-delete esl-reg-2 remove_wishlist_single'  data-product_id="<?php echo absint( $product['product_id'] ); ?>" data-variation_id="<?php echo absint( $product['variation_id'] ); ?>" data-product_type="<?php echo $product_data->is_type( 'variable' ); ?>"></i></a>
+                        </td>
                         <td><?php
                             if($product_data->is_type( 'variable' )){
                                 if($product['variation_id'] !=0){
